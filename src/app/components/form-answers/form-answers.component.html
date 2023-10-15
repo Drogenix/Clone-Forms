@@ -1,0 +1,107 @@
+<div [ngSwitch]="answerType.name">
+  <div *ngSwitchCase="'TextShort'" class="offered-answers">
+    <app-text-input placeholder="Краткий ответ"
+                    [disabled]="true"></app-text-input>
+  </div>
+  <div *ngSwitchCase="'TextLarge'" class="offered-answers">
+    <app-text-input placeholder="Развёрнутый ответ"
+                    [disabled]="true"></app-text-input>
+  </div>
+  <div class="answers"
+       cdkDropList
+       (cdkDropListDropped)="onDrop($event)"
+       *ngSwitchCase="'OneOfTheList'">
+    <div class="offered-answers">
+      <div class="answer"
+           cdkDrag
+           cdkDragLockAxis="y"
+           cdkDragBoundary=".offered-answers"
+           *ngFor="let answer of questionAnswers.offeredAnswers; let i = index">
+        <div cdkDragHandle>
+          <img src="assets/icon/drag.png">
+        </div>
+        <div>
+          <input type="radio" disabled>
+        </div>
+        <app-text-input placeholder="Вариант"
+                        [value]="answer.value"
+                        (onChange)="updateAnswer($event, i)"></app-text-input>
+        <div *ngIf="questionAnswers.offeredAnswers.length > 1">
+          <button class="action-btn" (click)="removeAnswer(i)">
+            <img alt="Удалить вопрос" height="14" width="14" src="assets/icon/close.png">
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="answer another-answer" *ngIf="questionAnswers.anotherAnswer">
+      <div>
+        <input type="radio" disabled>
+      </div>
+      <app-text-input placeholder="Другое"
+                      [disabled]="true"></app-text-input>
+      <div>
+        <button class="action-btn" (click)="removeAnswer(-1)">
+          <img alt="Удалить вопрос" height="14" width="14" src="assets/icon/close.png">
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="answers"
+       cdkDropList
+       (cdkDropListDropped)="onDrop($event)"
+       *ngSwitchCase="'FewOfTheList'">
+    <div class="offered-answers">
+      <div class="answer"
+           cdkDrag
+           cdkDragLockAxis="y"
+           cdkDragBoundary=".offered-answers"
+           *ngFor="let answer of questionAnswers.offeredAnswers; let i = index">
+        <div cdkDragHandle>
+          <img src="assets/icon/drag.png">
+        </div>
+        <div>
+          <input type="checkbox" disabled>
+        </div>
+        <app-text-input  placeholder="Вариант"
+                         [value]="answer.value"
+                         (onChange)="updateAnswer($event, i)"></app-text-input>
+        <div *ngIf="questionAnswers.offeredAnswers.length > 1">
+          <button class="action-btn" (click)="removeAnswer(i)">
+            <img alt="Удалить вопрос" height="14" width="14" src="assets/icon/close.png">
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="answer another-answer" *ngIf="questionAnswers.anotherAnswer">
+      <div>
+        <input type="checkbox" disabled>
+      </div>
+      <app-text-input placeholder="Другое"
+                      [disabled]="true"></app-text-input>
+      <div>
+        <button class="action-btn" (click)="removeAnswer(-1)">
+          <img alt="Удалить вопрос" height="14" width="14" src="assets/icon/close.png">
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="add-answer-option" *ngIf="answerType.name === 'FewOfTheList' || answerType.name === 'OneOfTheList'">
+    <div *ngIf="answerType.name === 'FewOfTheList'">
+      <input type="checkbox" disabled>
+    </div>
+    <div *ngIf="answerType.name === 'OneOfTheList'">
+      <input type="radio" disabled>
+    </div>
+    <button class="add-answer"
+            (click)="addAnswer()">
+      Добавить вариант
+    </button>
+    <div *ngIf="!questionAnswers.anotherAnswer">
+      <span>или</span>
+      <button  class="add-another-answer"
+              (click)="addAnotherAnswer()">
+        добавить вариант "Другое"
+      </button>
+    </div>
+  </div>
+</div>

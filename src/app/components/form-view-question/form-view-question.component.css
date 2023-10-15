@@ -1,0 +1,54 @@
+
+h2{
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 24px;
+  margin-top: 0;
+}
+
+p{
+  font-size: 16px;
+  margin-bottom: 0;
+}
+
+.form-answers{
+  display: grid;
+  gap: 20px;
+}
+
+.answer{
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+:host::ng-deep app-text-input .editable{
+  border-bottom: 1px solid lightgray;
+}
+
+.another-answer app-text-input .editable{
+  padding-bottom: 0;
+}
+
+:host app-text-input{
+  width: 100%;
+}
+
+.clear-response-btn{
+  display: flex;
+  align-items: center;
+  height: 36px;
+  border: none;
+  background-color: rgb(245, 245, 245);
+  border-radius: 6px;
+  font-size: 15px;
+  color: #5f6368;
+  margin-left: auto;
+  margin-top: 12px;
+  padding: 0 8px;
+  transition: background-color 200ms;
+}
+
+.clear-response-btn:is(:hover,:active){
+  background-color: rgb(224, 224, 224);
+}

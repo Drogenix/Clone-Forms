@@ -1,0 +1,113 @@
+:host{
+  --tui-primary: #673ab7;
+  --tui-primary-hover: #7a45da;
+  --tui-primary-active: #4c2b86;
+  --tui-radius-m: 6px;
+}
+
+:host::ng-deep tui-hints-host tui-hint{
+  border-radius: 4px;
+}
+
+:host::ng-deep tui-select-option tui-svg{
+  display: none;
+}
+
+:host::ng-deep tui-root > tui-scroll-controls{
+  display: none;
+}
+
+:host tui-root{
+  overflow: hidden;
+  --tui-alert-margin: auto 0 16px 16px;
+}
+
+@media (width < 950px) {
+  :host tui-root{
+    --tui-alert-margin: auto 0 64px 4px;
+  }
+}
+
+:host::ng-deep tui-alert-host tui-notification[data-status="warning"] {
+  background: #21094b;
+}
+
+:host::ng-deep tui-alert{
+  max-width: fit-content;
+  box-shadow: 0 4px 6px lightgrey;
+}
+
+:host::ng-deep tui-alert-host tui-notification[data-status=info]{
+  background: white;
+}
+
+:host::ng-deep tui-alert-host tui-notification[data-status=info] .t-content{
+  color: #673ab7;
+  font-size: 14px;
+}
+
+:host::ng-deep tui-alert-host [tuiWrapper][data-appearance='icon']{
+  color: white;
+  opacity: 1;
+}
+
+:host::ng-deep tui-dialog-host tui-dialog{
+  border-radius: 6px;
+}
+
+:host::ng-deep tui-dropdown[data-appearance='none']{
+  border-radius: 0;
+  border: none;
+  background: transparent;
+  box-shadow: none;
+}
+
+:host::ng-deep tui-dropdown[data-appearance='no-results'] .search-result{
+  padding: 0;
+}
+
+:host::ng-deep tui-hints-host tui-hint[data-appearance*='info']{
+  padding: 5px 8px;
+  min-height: auto;
+  font-size: 13px;
+  background: #ffffff;
+  border: 1px solid lightgray;
+  box-shadow: -2px 0 12px #f3f3f3;
+  color: #673ab7;
+}
+
+:host::ng-deep tui-hints-host tui-hint[data-appearance*='info']:after{
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 0.2rem;
+  box-sizing: border-box;
+  background: white;
+  z-index: 3;
+}
+
+:host::ng-deep tui-hints-host tui-hint[data-appearance*='info']:before{
+  border:1px solid lightgray;
+}
+
+:host::ng-deep tui-hints-host tui-hint[data-appearance*='info'] span{
+  position: relative;
+  z-index: 15;
+}
+
+:host::ng-deep tui-dropdown[data-appearance='searchResult']{
+  border-radius: 0 0 8px 8px;
+  border: none;
+  border-top: 1px solid lightgray;
+}
+
+@media (width < 676px) {
+  :host::ng-deep tui-dropdown[data-appearance='searchResult'] {
+    border-radius: 8px 8px 0 0;
+    box-shadow: 0 -4px 12px #ececec;
+    border: none;
+    border-bottom: 1px solid lightgray;
+  }
+}

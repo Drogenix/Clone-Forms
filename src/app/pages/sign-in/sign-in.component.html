@@ -1,0 +1,77 @@
+<div class="container-centered">
+  <form class="form"
+        [class.form-disabled]="load$ | async">
+    <div class="loading" *ngIf="load$ | async">
+      <div class="loading-bar">
+        <div></div>
+      </div>
+    </div>
+    <img src="assets/icon/brend.svg">
+    <div class="text-center">
+        <p class="form-header">Вход</p>
+        <p class="form-label">Используйте аккаунт Clone</p>
+    </div>
+    <div class="wrapper">
+        <div class="form-step"
+             *ngIf="step === 0"
+             @slideIn
+             [@.disabled]="animationDisabled">
+          <div class="input-wrapper">
+            <input
+              class="input"
+              [class.invalid]="error$ | async"
+              [attr.data-empty]="loginForm.controls.login.value === ''"
+              [formControl]="loginForm.controls.login">
+            <span class="input-placeholder">
+        Логин
+      </span>
+          </div>
+          <p class="input-error"
+             *ngIf="loginForm.controls.login.invalid
+                  && loginForm.controls.login.dirty
+                  && !(error$|async)">
+            Введите логин
+          </p>
+          <p class="input-error" *ngIf="(error$ | async) as error">{{error}}</p>
+          <p class="form-label forgot-password clr-primary">Забыли логин от аккаунта?</p>
+          <div class="form-buttons">
+            <a class="secondary-btn" routerLink="/sign-up">Создать аккаунт</a>
+            <button class="primary-btn" (click)="checkLogin()">Далее</button>
+          </div>
+        </div>
+        <div class="form-step"
+             *ngIf="step === 1"
+             @slideIn>
+          <div class="input-wrapper">
+            <input class="input"
+                   [class.invalid]="error$ | async"
+                   [attr.data-empty]="loginForm.controls.password.value === ''"
+                   [formControl]="loginForm.controls.password"
+                   [type]="showPass ? 'text' : 'password'">
+            <span class="input-placeholder">
+        Введите пароль
+      </span>
+          </div>
+          <p class="input-error"
+             *ngIf="
+           loginForm.controls.password.invalid
+           && loginForm.controls.password.dirty
+           && !(error$|async)">
+            Введите пароль
+          </p>
+          <p class="input-error" *ngIf="error$ | async as error">{{error}}</p>
+          <div class="show-password">
+            <input type="checkbox"
+                   [checked]="showPass"
+                   (input)="showPass = !showPass">
+            <p>Показать пароль</p>
+          </div>
+          <a class="form-label clr-primary">Забыли пароль?</a>
+          <div class="form-buttons">
+            <a class="secondary-btn" (click)="previousStep()">Назад</a>
+            <button class="primary-btn" (click)="submit()">Далее</button>
+          </div>
+        </div>
+      </div>
+  </form>
+</div>

@@ -1,0 +1,20 @@
+<div class="pie-chart-container">
+  <tui-pie-chart size="l"
+                 [value]="value"
+                 [tuiHintContent]="chartHint">
+  </tui-pie-chart>
+  <ng-template #chartHint let-index>
+    <div>
+      <p>{{labels[index]}}</p>
+      <p>{{value[index] | formatResponsesTotal}} ({{valuePercentage[index]}}%)</p>
+    </div>
+  </ng-template>
+  <div class="pie-diagram-labels">
+    <ng-container *ngFor="let label of labels; let i = index">
+      <div class="pie-label">
+        <div class="label-bullet" [style.background-color]="getColor(i)"></div>
+        <p>{{label}}</p>
+      </div>
+    </ng-container>
+  </div>
+</div>

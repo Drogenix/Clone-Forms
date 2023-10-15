@@ -1,0 +1,38 @@
+.dialog-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 12px;
+}
+
+.action-btn{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 32px;
+  width: 32px;
+}
+
+.action-btn img{
+  height: 16px;
+  width: 16px;
+}
+
+.dialog-form-link input{
+  width: 100%;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid lightgray;
+  font-size: 15px;
+  padding-bottom: 0.3em;
+  cursor: pointer;
+}
+
+
+.dialog-form-link{
+  margin-bottom: 16px;
+}
+
+.form-link-header{
+  margin-bottom: 8px;
+}

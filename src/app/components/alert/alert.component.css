@@ -1,0 +1,31 @@
+.alert{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.alert > div{
+  display: flex;
+}
+
+p{
+  color: white;
+}
+
+button,p{
+  font-size: 14px;
+}
+
+button{
+  background: transparent;
+  border: none;
+  color: var(--tui-warning-fill);
+}
+
+button:hover{
+  text-decoration: underline;
+}
+
+.cancel-btn{
+  margin-right: 12px;
+}

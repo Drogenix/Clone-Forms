@@ -1,0 +1,150 @@
+:host{
+  display: flex;
+  height: 100%;
+}
+
+.container{
+  padding: 0 12px;
+  margin-top: 16px;
+  max-width: 768px;
+}
+
+main{
+  flex: 1 1;
+  margin-top: 84px;
+  overflow:auto;
+}
+
+.form-block:first-child{
+  padding-bottom: 0;
+}
+
+.responses-header{
+  display: flex;
+  flex-direction: column;
+  gap:8px;
+  margin-bottom: 32px;
+}
+
+/*@media screen and (max-width: 576px){*/
+/*  .accept-responses{*/
+/*    margin-left: auto;*/
+/*  }*/
+/*}*/
+
+h1{
+  font-size: 24px;
+  font-weight: normal;
+}
+
+.responses-nav{
+  display: flex;
+}
+
+.toggle{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+}
+
+.toggle p{
+  font-size: 14px;
+  margin: 0;
+}
+
+.toggle-accepting-responses[data-accepting=false]{
+  border-radius: 6px;
+  border:1px solid lightgray;
+  overflow: hidden;
+}
+
+.toggle-accepting-responses[data-accepting=false] .toggle{
+  background: #673ab7;
+  padding: 16px;
+  border-bottom: 1px solid lightgray;
+}
+
+.toggle-accepting-responses[data-accepting=false] .toggle p{
+  color: white;
+}
+
+.toggle-accepting-responses .toggle::ng-deep[tuiWrapper][data-appearance='secondary']{
+  background: #c5bbd5;
+}
+
+.toggle-accepting-responses[data-accepting=false] .accepting-closed-message{
+  display: block;
+}
+
+.accepting-closed-message{
+  display: none;
+  padding: 16px;
+}
+
+.accepting-closed-header{
+  font-size: 15px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.responses-nav > div{
+  flex: 1 1;
+  display: flex;
+  justify-content: center;
+  align-self: end;
+  cursor: pointer;
+}
+
+.nav-link{
+  margin-top: auto;
+  max-width: min-content;
+  font-weight: normal;
+  font-size: clamp(13px, 2vw + 1px, 14px);
+  text-align: center;
+  color: #3C4043;
+}
+
+.nav-link:hover,
+.nav-link:active{
+  background-color: #efefef;
+}
+
+.active{
+  color: rgb(76, 43, 135);
+}
+
+@media screen and (max-width: 400px){
+  .nav-link{
+    padding: 8px;
+  }
+
+  .form-block:first-child{
+    padding:24px 0 0 0;
+  }
+
+  .responses-header{
+    padding: 0 24px;
+  }
+
+  .responses-nav .nav-link{
+    flex: 1 1;
+  }
+}
+
+@media screen and (max-width: 676px){
+  .container{
+    margin-top: 8px;
+    padding: 0 4px;
+  }
+
+  :host::ng-deep .form-block{
+    margin-bottom: 4px;
+  }
+}
+
+@media screen and (max-width: 576px){
+  main{
+    margin-top: 140px;
+  }
+}

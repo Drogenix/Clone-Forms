@@ -1,0 +1,52 @@
+<header>
+  <div class="header-content">
+    <div class="header-brend">
+      <a routerLink="/">
+        <img alt="Формы" src="assets/img/forms-brend.png">
+      </a>
+      <ng-content select="[h-brend-content]"></ng-content>
+    </div>
+    <ng-content select="[h-content]"></ng-content>
+    <div class="header-profile">
+      <button [tuiHint]="'Профиль'"
+              [tuiHintShowDelay]="0"
+              [tuiHintHideDelay]="100"
+              [tuiHintAppearance]="'info'"
+              [tuiHintDirection]="'bottom'"
+              [tuiDropdown]="profile"
+              [tuiDropdownAppearance]="'none'"
+              [tuiDropdownManual]="openProfile"
+              [tuiDropdownOffset]="12"
+              (click)="toggleProfile()">
+        <img src="assets/img/user.png" alt="Профиль">
+      </button>
+    </div>
+    <ng-template #profile>
+      <div class="profile">
+        <div class="profile-header">
+          <p class="login">{{userName}}</p>
+          <button class="action-btn profile-close" (click)="toggleProfile()">
+            <img src="assets/icon/close.png">
+          </button>
+        </div>
+        <div class="profile-img">
+          <div class="profile-img-wrapper">
+            <img src="assets/icon/person.svg">
+          </div>
+          <p>Здравствуйте!</p>
+        </div>
+        <div class="profile-menu">
+          <a class="profile-menu-item" routerLink="/trash">
+            <img class="icon-trash" src="assets/icon/trash.svg">
+            <span>Корзина</span>
+          </a>
+          <button class="profile-menu-item logout-btn" (click)="logout()">
+            <img class="icon-logout" src="assets/icon/logout.svg">
+            <span>Выйти</span>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+  <ng-content select="[h-bottom]"></ng-content>
+</header>

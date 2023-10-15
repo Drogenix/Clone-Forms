@@ -1,0 +1,65 @@
+<ng-container *ngIf="formDetails$ | async">
+  <app-header>
+    <div h-brend-content class="form-name-input hide-sm">
+      <input [formControl]="formName" type="text">
+    </div>
+    <div class="form-menu" h-content>
+      <a class="action-btn view"
+         [routerLink]="['/form', formId, 'view']"
+         [tuiHint]="'Просмотреть форму'"
+         [tuiHintShowDelay]="0"
+         [tuiHintHideDelay]="0"
+         [tuiHintAppearance]="'info'"
+         [tuiHintDirection]="'bottom'">
+        <img alt="Просмотреть форму" src="assets/img/see.png">
+      </a>
+      <button class="action-btn"
+              [tuiHint]="'Отправить форму'"
+              [tuiHintShowDelay]="0"
+              [tuiHintHideDelay]="0"
+              [tuiHintAppearance]="'info'"
+              [tuiHintDirection]="'bottom'"
+              (click)="openSendFormDialog()">
+        <img alt="Отправить" src="assets/img/send.png">
+      </button>
+      <button class="action-btn"
+              [tuiHint]="'Меню формы'"
+              [tuiHintShowDelay]="0"
+              [tuiHintHideDelay]="0"
+              [tuiHintAppearance]="'info'"
+              [tuiHintDirection]="'bottom'">
+        <img alt="Меню формы" src="assets/img/menu.png">
+      </button>
+    </div>
+    <div>
+    </div>
+    <div h-bottom class="header-bottom">
+      <div class="form-name-input">
+        <input [formControl]="formName">
+      </div>
+      <nav>
+        <a class="nav-link"
+           routerLinkActive="active"
+           routerLink="edit">Вопросы</a>
+        <a class="nav-link"
+           routerLinkActive="active"
+           routerLink="responses">Ответы</a>
+      </nav>
+    </div>
+  </app-header>
+  <ng-container *ngIf="(updating$ | async) as state">
+    <div class="updating-state"
+         [@tuiSlideInBottom]="{value:'', duration:300}"
+         *ngIf="showState$ | async">
+      <p *ngIf="state.updating; else saved">Сохранение...</p>
+      <ng-template #saved>
+        <p>Все изменения сохранены</p>
+        <img alt="Изменения сохранены" src="assets/icon/cloud-done.png">
+      </ng-template>
+    </div>
+  </ng-container>
+</ng-container>
+<app-error *ngIf="(notFound$ | async) as error; else router" [error]="error"></app-error>
+<ng-template #router>
+  <router-outlet></router-outlet>
+</ng-template>

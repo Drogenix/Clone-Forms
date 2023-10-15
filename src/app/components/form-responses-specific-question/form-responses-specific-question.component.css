@@ -1,0 +1,37 @@
+:host::ng-deep tui-select{
+  max-width: 400px;
+}
+
+.answer{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.offered-answers{
+  margin-top: 12px;
+}
+
+.response-repeats{
+  border-top: 1px solid lightgray;
+  margin-top: 32px;
+  padding-top:20px;
+}
+
+.response-repeats p{
+  color: #673ab7;
+  font-weight: bolder;
+  font-size: 14px;
+}
+
+:host::ng-deep tui-select [tuiWrapper][data-appearance='textfield']:hover:not(._no-hover),
+:host::ng-deep tui-select [tuiWrapper][data-appearance='textfield']
+{
+  box-shadow: none;
+}
+
+.italic{
+  font-style: italic;
+  color: #9da5ab;
+}

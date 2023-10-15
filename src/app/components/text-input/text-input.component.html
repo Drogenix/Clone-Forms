@@ -1,0 +1,10 @@
+<div class="input-wrapper">
+  <input #editor
+         class="editable"
+         [class]="styleClass"
+         [placeholder]="placeholder"
+         [disabled]="disabled"
+         (blur)="onBlur()"
+         [value]="value">
+</div>
+

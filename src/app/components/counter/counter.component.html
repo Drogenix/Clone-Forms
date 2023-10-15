@@ -1,0 +1,15 @@
+<div class="counter">
+  <button class="action-btn" (click)="onBtnClick(-1)">
+    <img src="assets/icon/arrow-back.png">
+  </button>
+  <div class="counter-input">
+    <input id="counter"
+           type="number"
+           [formControl]="counter">
+    <span>из</span>
+    <p>{{max}}</p>
+  </div>
+  <button class="action-btn" (click)="onBtnClick(1)">
+    <img src="assets/icon/arrow-forw.png">
+  </button>
+</div>

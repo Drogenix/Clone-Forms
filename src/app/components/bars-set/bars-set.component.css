@@ -1,0 +1,86 @@
+:host{
+  display: flex;
+}
+
+.bars-set-axes{
+  display: flex;
+  flex: 1 1;
+  min-height: 200px;
+}
+
+:host::ng-deep tui-bar{
+  height: 1rem;
+  border-radius: 0;
+  margin: 0 !important;
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+:host::ng-deep tui-axes .t-label-y{
+
+  font-size: 13px;
+  color: #3C4043;
+  line-height: 2rem;
+}
+
+:host::ng-deep tui-axes .t-labels-x {
+  text-align: end;
+}
+
+.bar-label{
+  position: absolute;
+  right: 4px;
+  top: 0;
+  width: max-content;
+  display: flex;
+  align-items: center;
+  color: white;
+  font-size: 12px;
+}
+
+.bar-label > span{
+  width: 10px;
+  background: #3C4043;
+  margin-right: 4px;
+  height: 1px;
+}
+
+.bar-line{
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.bar-line:last-child{
+  align-items: flex-start;
+}
+
+.bar-line:first-child {
+  align-items: flex-end;
+}
+
+.bars{
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 100%;
+}
+
+.bar{
+  position: relative;
+  container-name: bar;
+  container-type: inline-size;
+}
+
+@container bar (width < 60px){
+  .bar-label{
+    display: block;
+    right: 0;
+    left: 110%;
+    margin-left: 4px;
+    color: #3C4043;
+  }
+}

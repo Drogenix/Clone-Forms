@@ -1,0 +1,74 @@
+<h2>{{question.title}}
+  <span class="required-mark"
+        *ngIf="question.required">*</span>
+</h2>
+<div class="form-answers" [ngSwitch]="question.answerType.name">
+  <ng-container *ngFor="let answer of question.answers.offeredAnswers; let i = index">
+    <div class="answer">
+        <app-text-input placeholder="Краткий ответ"
+                        *ngSwitchCase="'TextShort'"
+                        [value]="questionResponse.answers.length !=0 ? questionResponse.answers[0].value : ''"
+                        [disabled]="disabled"
+                        (onChange)="textAnswerChanged(answer, $event)">
+        </app-text-input>
+        <app-text-rich-editor placeholder="Развёрнутый ответ"
+                              *ngSwitchCase="'TextLarge'"
+                              [value]="questionResponse.answers.length !=0 ? questionResponse.answers[0].value : ''"
+                              [disabled]="disabled"
+                              (onChange)="textAnswerChanged(answer, $event)">
+        </app-text-rich-editor>
+        <ng-container *ngSwitchCase="'OneOfTheList'">
+          <div>
+            <input type="radio"
+                   [name]="question.id"
+                   [checked]="isSelected(answer.id)"
+                   [disabled]="disabled"
+                   (input)="radioAnswerChanged(answer)">
+          </div>
+          <p>{{answer.value}}</p>
+        </ng-container>
+        <ng-container *ngSwitchCase="'FewOfTheList'">
+          <div>
+            <input type="checkbox"
+                   [checked]="isSelected(answer.id)"
+                   [disabled]="disabled"
+                   (input)="checkboxAnswerChanged(answer)">
+          </div>
+          <p>{{answer.value}}</p>
+        </ng-container>
+    </div>
+  </ng-container>
+  <div class="answer another-answer" *ngIf="anotherAnswer">
+    <ng-container *ngSwitchCase="'OneOfTheList'">
+      <div>
+        <input type="radio"
+               [name]="question.id"
+               [checked]="isSelected(anotherAnswer.id)"
+               [disabled]="disabled"
+               (input)="radioAnswerChanged(anotherAnswer)">
+      </div>
+      <p>Другое:</p>
+      <app-text-input [value]="anotherAnswer.value"
+                      [disabled]="disabled"
+                      (onChange)="anotherAnswerChanged($event)"></app-text-input>
+    </ng-container>
+    <ng-container *ngSwitchCase="'FewOfTheList'">
+      <div>
+        <input type="checkbox"
+               [checked]="isSelected(anotherAnswer.id)"
+               [disabled]="disabled"
+               (input)="checkboxAnswerChanged(anotherAnswer)">
+      </div>
+      <p>Другое:</p>
+      <app-text-input [value]="anotherAnswer.value"
+                      [disabled]="disabled"
+                      (onChange)="anotherAnswerChanged($event)"></app-text-input>
+    </ng-container>
+  </div>
+</div>
+<button *ngIf="questionResponse.answers.length != 0 && !disabled"
+        type="button"
+        class="clear-response-btn"
+        (click)="clearResponse()">
+  Отменить выбор
+</button>

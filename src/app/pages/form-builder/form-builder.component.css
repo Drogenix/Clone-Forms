@@ -1,0 +1,128 @@
+:host{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: #f0ebf8;
+  --draggable-height:116px;
+}
+
+.form-description app-text-rich-editor{
+  margin-bottom: 8px;
+  border-bottom: 1px solid #e1e1e1;
+}
+
+.form-description{
+  border-top: 10px solid #673ab7;
+  border-radius: 10px 10px 6px 6px;
+}
+
+.selected{
+  border-bottom: 3px solid #673ab7;
+}
+
+main{
+  flex: 1 1;
+  margin-top: 89px;
+  overflow:auto;
+  scrollbar-gutter: stable;
+}
+
+@media screen and (max-width: 576px){
+  main{
+    margin-top: 144px;
+  }
+}
+
+@media screen and (max-width: 950px){
+  main{
+    padding-bottom: 58px;
+  }
+}
+
+.container{
+  position: relative;
+  margin-top: 20px;
+  max-width: 770px;
+  padding: 0 24px;
+}
+
+@media screen and (max-width: 676px){
+  .container{
+    padding: 0 4px;
+    margin-top: 4px;
+  }
+
+  .form-block{
+    margin-bottom: 4px;
+  }
+}
+
+app-form-question.selected .draggable-area{
+  visibility: visible;
+}
+
+.draggable-area{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 20px;
+  margin-bottom: 4px;
+  cursor: move;
+  visibility: hidden;
+}
+
+.form-block{
+  overflow: hidden;
+}
+
+.question-drag-placeholder{
+  height: var(--draggable-height);
+  max-height: var(--draggable-height);
+  margin-bottom: 12px;
+  border: none;
+  background: rgba(255, 255, 255, 0.4);
+  animation: expand 500ms;
+}
+
+@keyframes expand {
+  0%{
+    height: var(--draggable-height);
+    max-height: var(--draggable-height);
+  }
+  1%{
+    max-height: 300px;
+  }
+  100%{
+    max-height: var(--draggable-height);
+  }
+}
+
+.form-block.cdk-drag-preview{
+  max-height: var(--draggable-height);
+  opacity: 0.8;
+  animation: showP 500ms;
+}
+
+@keyframes showP {
+  0%{
+    max-height: 500px;
+  }
+  100%{
+    max-height: var(--draggable-height);
+  }
+}
+
+@media screen and (width < 596px) {
+  :host{
+    --draggable-height: 106px;
+  }
+
+  .question-drag-placeholder{
+    margin-bottom: 4px;
+  }
+}
+
+.draggable-area img{
+  transform: rotate(90deg);
+}

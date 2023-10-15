@@ -1,0 +1,17 @@
+:host::ng-deep app-form-view .container{
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 768px;
+}
+
+.sticky-block{
+  position: sticky;
+  top: 8px;
+  z-index: 999;
+  box-shadow: 0 0 12px #eaeaea;
+}
+
+.no-responses-message{
+  color: var(--clr-text);
+}

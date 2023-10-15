@@ -1,0 +1,24 @@
+<tui-select [tuiTextfieldLabelOutside]="true"
+            [formControl]="select"
+            [valueContent]="valueContent">
+  <tui-data-list *tuiDataList>
+    <ng-container *ngFor="let item of questionTypeGroups">
+      <tui-opt-group *ngIf="isArray(item); else itemTempl">
+        <button tuiOption [value]="innerItem" *ngFor="let innerItem of item">
+          <ng-container *ngTemplateOutlet="valueContent; context:{$implicit:innerItem}"></ng-container>
+        </button>
+      </tui-opt-group>
+      <ng-template #itemTempl>
+        <button tuiOption [value]="item">
+          <ng-container *ngTemplateOutlet="valueContent; context:{$implicit:item}"></ng-container>
+        </button>
+      </ng-template>
+    </ng-container>
+  </tui-data-list>
+</tui-select>
+<ng-template #valueContent let-item>
+  <div class="select-item">
+    <img height="24" width="24" [src]="item.icon">
+    <span>{{item.value}}</span>
+  </div>
+</ng-template>

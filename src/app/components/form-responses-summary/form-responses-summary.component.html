@@ -1,0 +1,41 @@
+<ng-container *ngIf="formResponsesData | async as formData; else loading">
+  <div class="form-block"
+       *ngFor="let question of formData.form.questions; let i = index">
+    <div>
+      <p class="question-title">{{question.title}}</p>
+      <span class="question-total-answers">{{formData.questionsResponsesInfo[i].totalAnswers | formatResponsesTotal}}</span>
+    </div>
+    <ng-container *ngIf="formData.questionsResponsesInfo[i].totalAnswers > 0">
+      <div class="answers"
+           [ngSwitch]="question.answerType.name">
+        <div *ngSwitchCase="'TextLarge'">
+          <ng-container *ngFor="let questionResponse of formData.questionsResponsesInfo[i].questionAnswers">
+            <p class="text-answer">
+              {{questionResponse.answer.value}}
+            </p>
+          </ng-container>
+        </div>
+        <div *ngSwitchCase="'TextShort'">
+          <ng-container *ngFor="let questionResponse of formData.questionsResponsesInfo[i].questionAnswers">
+            <p class="text-answer">
+              {{questionResponse.answer.value}}
+            </p>
+          </ng-container>
+        </div>
+        <app-pie-chart *ngSwitchCase="'OneOfTheList'"
+                       [value]="getAnswersTotalRepeats(formData.questionsResponsesInfo[i])"
+                       [labels]="getAnswersText(formData.questionsResponsesInfo[i])">
+        </app-pie-chart>
+        <div>
+          <app-bars-set *ngSwitchCase="'FewOfTheList'"
+                        [value]="getAnswersTotalRepeats(formData.questionsResponsesInfo[i])"
+                        [axisYLabels]="getAnswersText(formData.questionsResponsesInfo[i])">
+          </app-bars-set>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</ng-container>
+<ng-template #loading>
+  <app-page-spinner></app-page-spinner>
+</ng-template>

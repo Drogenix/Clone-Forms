@@ -1,0 +1,17 @@
+<div class="dialog-head">
+  <p class="dialog-header">Отправить</p>
+  <button class="action-btn" (click)="close()">
+    <img alt="Закрыть" src="assets/icon/close.png">
+  </button>
+</div>
+<div class="dialog-form-link">
+  <p class="form-link-header">Ссылка</p>
+  <input disabled
+         [value]="formLink"
+         (click)="copyLink()">
+
+  <small class="clr-primary" *ngIf="copied">Ссылка скопирована</small>
+</div>
+<div class="dialog-buttons">
+  <button class="dialog-submit" (click)="copyLink()">Копировать</button>
+</div>

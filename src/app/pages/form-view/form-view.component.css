@@ -1,0 +1,121 @@
+:host{
+  display: flex;
+  flex-direction: column;
+  background: #f0ebf8;
+  height: 100%;
+  overflow: auto;
+}
+
+h1{
+  font-size: 20px;
+  margin-bottom: 8px;
+  font-weight: bold;
+}
+
+form > .form-block:first-child{
+  border-top: 10px solid #673ab7;
+  border-radius: 10px 10px 6px 6px;
+}
+
+fieldset{
+  border: none;
+}
+
+.form-block:has(.ng-touched.question-required){
+  border-color: rgb(217,48,37);
+}
+
+form{
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+
+.container{
+  max-width: 640px;
+}
+
+.form-buttons{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-buttons button{
+  height: 36px;
+  font-size: 15px;
+  border-radius: 6px;
+  border: none;
+  transition: background-color 200ms;
+}
+
+.send-form{
+  padding: 0 24px;
+  background: #673ab7;
+  color: white;
+}
+
+.send-form:is(:hover,:active, :focus){
+  background-color: #8557DCFF;
+}
+
+.clear-form{
+  padding: 0 12px;
+  background: transparent;
+  color: #673ab7;
+}
+
+.clear-form:hover{
+  background-color: #eae0f9;
+}
+
+.question-errors{
+  color: rgb(217,48,37);
+  margin-top: 12px;
+  font-size: 14px;
+}
+
+.form-block:has(.ng-touched.ng-invalid){
+  border-color: rgb(217,48,37);
+}
+
+@media (width < 716px) {
+  .container{
+    padding: 0 4px;
+  }
+
+  .form-block{
+    margin-bottom: 4px;
+  }
+
+  form{
+    margin-top: 4px;
+  }
+}
+
+footer{
+  margin-top: 12px;
+}
+
+.policy{
+  font-size: 15px;
+  color: rgba(0, 0, 0, 0.66);
+  text-align: center;
+}
+
+.footer-brend{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.footer-brend img{
+  height: 22px;
+}
+
+.footer-brend p{
+  font-size: 22px;
+  color: #675E76;
+  font-weight: 500;
+  margin-left: 6px;
+}

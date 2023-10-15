@@ -1,0 +1,43 @@
+<main>
+  <div class="container">
+    <div class="form-block" *ngIf="formDetails$ | async as formDetails">
+      <div class="responses-header">
+        <h1>{{formDetails.totalResponses | formatResponsesTotal}}</h1>
+        <div class="toggle-accepting-responses"
+             [attr.data-accepting]="acceptResponses.value">
+          <div class="toggle">
+            <p>{{formDetails.acceptResponses ? 'Принимать ответы' : 'Ответы не принимаются'}}</p>
+            <tui-toggle size="l"
+                        [formControl]="acceptResponses"></tui-toggle>
+          </div>
+          <div class="accepting-closed-message">
+            <p class="accepting-closed-header">Сообщение для респондентов</p>
+            <app-text-input [placeholder]="DEFAULT_FORM_CLOSED_MESSAGE"
+                            [value]="formDetails.formClosedMessage || ''"
+                            (onChange)="onMessageChanged($event)"></app-text-input>
+          </div>
+        </div>
+      </div>
+      <nav class="responses-nav">
+        <div>
+          <a class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="./"
+                  [routerLinkActiveOptions]="{exact:true}">Сводка
+          </a>
+        </div>
+        <div>
+          <a class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="questions">Вопрос</a>
+        </div>
+        <div>
+          <a class="nav-link"
+                  routerLinkActive="active"
+                  routerLink="users">Отдельный пользователь</a>
+        </div>
+      </nav>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</main>

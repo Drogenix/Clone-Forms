@@ -1,0 +1,88 @@
+<ng-container *ngIf="formData$ | async as formData; else loadingOrError">
+  <form class="container">
+    <ng-container
+      *ngIf="
+        formData.details?.acceptResponses || formResponse || viewForm;
+        else formClosed
+      "
+    >
+      <ng-container *ngIf="!(responseSaved$ | async); else responseSaved">
+        <div class="form-block">
+          <h1>{{ formData.form.title }}</h1>
+          <p class="form-description">
+            {{ formData.form.description }}
+          </p>
+        </div>
+        <div
+          class="form-block"
+          *ngFor="let question of formData.form.questions; let i = index"
+        >
+          <app-form-view-question
+            [question]="question"
+            [disabled]="!editable"
+            [formControl]="responses.controls[i]"
+          >
+          </app-form-view-question>
+          <div
+            class="question-errors"
+            *ngIf="
+              responses.controls[i].touched &&
+              responses.controls[i].errors?.['questionRequired']
+            "
+          >
+            <span>Этот вопрос обязательный</span>
+          </div>
+        </div>
+        <div *ngIf="editable && responses.touched">
+          <div class="form-buttons">
+            <button class="send-form" type="button" (click)="saveResponse()">
+              Отправить
+            </button>
+            <button
+              class="clear-form"
+              type="button"
+              (click)="clearUserResponse(formData.form)"
+            >
+              Очистить форму
+            </button>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #responseSaved>
+        <div class="form-block">
+          <h1>{{ formData.form.title }}</h1>
+          <p class="form-description">
+            Ваш ответ записан, спасибо что уделили внимание.
+          </p>
+        </div>
+      </ng-template>
+    </ng-container>
+    <ng-template #formClosed>
+      <div class="form-block">
+        <h1>{{ formData.form.title }}</h1>
+        <p class="form-description">
+          {{
+            formData.details?.formClosedMessage ||
+              this.DEFAULT_FORM_CLOSED_MESSAGE
+          }}
+        </p>
+      </div>
+    </ng-template>
+    <footer *ngIf="editable">
+      <p class="policy">
+        Сервис Clone Forms не имеет отношения к этому контенту.
+      </p>
+      <div class="footer-brend">
+        <img src="assets/icon/brend-dark.svg" />
+        <p>Формы</p>
+      </div>
+    </footer>
+  </form>
+</ng-container>
+<ng-template #loadingOrError>
+  <app-error *ngIf="error$ | async as error; else loading" [error]="error">
+  </app-error>
+  <ng-template #loading>
+    <app-page-spinner></app-page-spinner>
+  </ng-template>
+</ng-template>

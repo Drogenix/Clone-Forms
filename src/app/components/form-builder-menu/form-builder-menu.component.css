@@ -1,0 +1,67 @@
+:host{
+  position: absolute;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid lightgray;
+  top: 0;
+  right: -33px;
+  transition: 300ms ease-in-out;;
+}
+
+.edit-menu-container{
+  display: flex;
+  flex-direction: column;
+  padding: 4px;
+  gap: 4px;
+}
+
+.action-btn{
+  height: 36px;
+  width: 36px;
+}
+
+.action-btn img{
+  height: 24px;
+  width: 24px;
+}
+
+@media (width < 950px) {
+  :host{
+    border-radius: 8px 8px 0 0;
+    border: 1px solid lightgray;
+    max-width: 722px;
+    width: 100%;
+    transition: 300ms ease-in-out;
+    position: fixed;
+    bottom: 0;
+    top: auto !important;
+    right: auto;
+  }
+
+  .action-btn{
+    height: 42px;
+    width: 42px;
+  }
+
+  .action-btn img{
+    height: 28px;
+    width: 28px;
+  }
+
+  .edit-menu-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    padding: 4px;
+    height: 56px;
+    gap: 4px;
+  }
+}
+
+@media (width < 770px) {
+    :host{
+    left: 0;
+      max-width: 100%;
+    }
+}

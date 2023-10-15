@@ -1,0 +1,48 @@
+<main #main cdkScrollable>
+  <ng-container *ngIf="formData$ | async; else loading">
+    <div #formCont
+         [formGroup]="form"
+         class="container">
+      <div class="form-block form-description"
+           [class.selected]="selected === DESCRIPTION_BLOCK_INDEX"
+           (mousedown)="setBlockAsSelected(-1)">
+        <app-text-rich-editor formControlName="title"
+                              placeholder="Название формы"
+                              styleClass="form-title-input"></app-text-rich-editor>
+        <app-text-rich-editor formControlName="description"
+                              placeholder="Описание"
+                              styleClass="form-description-input"></app-text-rich-editor>
+      </div>
+      <div class="form-questions"
+           formArrayName="questions"
+           cdkDropList
+           [cdkDropListSortPredicate]="canSort"
+           [cdkDropListAutoScrollStep]="18"
+           [cdkDropListAutoScrollDisabled]="false"
+           (cdkDropListDropped)="onQuestionDrop($event)">
+        <app-form-question *ngFor="let question of questions.controls; let i = index"
+                           cdkDrag
+                           cdkDragLockAxis="y"
+                           [cdkDragPreviewContainer]="'parent'"
+                           [cdkDragPreviewClass]="'question-drag-preview'"
+                           [class.selected]="selected === i"
+                           [formControlName]="i"
+                           (onCopy)="copyQuestion(i)"
+                           (onDelete)="deleteQuestion(i)"
+                           (mousedown)="setBlockAsSelected(i)">
+          <div cdkDragHandle class="draggable-area">
+            <img src="assets/icon/drag.png">
+          </div>
+          <div class="question-drag-placeholder" *cdkDragPlaceholder></div>
+        </app-form-question>
+      </div>
+      <app-form-builder-menu [selectedBlock]="selected"
+                             [parentRef]="mainRef"
+                             (onAddQuestion)="addQuestion(true)">
+      </app-form-builder-menu>
+    </div>
+  </ng-container>
+</main>
+<ng-template #loading>
+  <app-page-spinner></app-page-spinner>
+</ng-template>

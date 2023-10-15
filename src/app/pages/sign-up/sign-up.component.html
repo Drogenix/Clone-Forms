@@ -1,0 +1,87 @@
+<div class="container-centered">
+  <form
+    class="form"
+    [class.form-disabled]="load$ | async"
+    [formGroup]="signUpForm"
+    (ngSubmit)="submit()">
+    <div *ngIf="load$ | async" class="loading">
+      <div class="loading-bar">
+        <div></div>
+      </div>
+    </div>
+    <img src="assets/icon/brend.svg" />
+    <div class="text-center">
+      <p class="form-header">Создание аккаунта Clone</p>
+    </div>
+    <div class="wrapper">
+      <div class="form-step">
+        <div class="input-wrapper">
+          <input
+            class="input"
+            id="login"
+            type="text"
+            formControlName="login"
+            [attr.data-empty]="signUpForm.controls.login.value === ''"
+          />
+          <span class="input-placeholder"> Логин </span>
+          <app-spinner
+            *ngIf="signUpForm.controls.login.status == 'PENDING'"
+          ></app-spinner>
+        </div>
+        <ng-container
+          *ngTemplateOutlet="
+            inputErrors;
+            context: { $implicit: signUpForm.controls.login }
+          "
+        ></ng-container>
+        <div class="input-wrapper">
+          <input
+            class="input"
+            id="password"
+            formControlName="password"
+            [type]="showPass ? 'text' : 'password'"
+            [attr.data-empty]="signUpForm.controls.password.value === ''"
+          />
+          <span class="input-placeholder"> Пароль </span>
+        </div>
+        <ng-container
+          *ngTemplateOutlet="
+            inputErrors;
+            context: { $implicit: signUpForm.controls.password }
+          "
+        ></ng-container>
+        <div class="show-password">
+          <input
+            type="checkbox"
+            [checked]="showPass"
+            (input)="showPass = !showPass"
+          />
+          <p>Показать пароль</p>
+        </div>
+        <div class="text-center input-error" *ngIf="error$ | async as error">
+          {{ error }}
+        </div>
+        <div class="form-buttons">
+          <a class="secondary-btn" routerLink="/sign-in">Есть аккаунт?</a>
+          <button class="primary-btn">Создать</button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+<ng-template #inputErrors let-control>
+  <ng-container *ngIf="control.touched">
+    <p class="input-error" *ngIf="control.errors?.['required']">
+      Введите пароль
+    </p>
+    <p class="input-error" *ngIf="control.errors?.['minlength']">
+      Минимальная длина - {{ control.errors?.["minlength"].requiredLength }}
+    </p>
+    <p class="input-error" *ngIf="control.errors?.['maxlength']">
+      Максимальная длина - {{ control.errors?.["maxlength"].requiredLength }}
+    </p>
+  </ng-container>
+  <p class="input-error" *ngIf="control.errors?.['userExists']">
+    Данный логин занят. Попробуйте другой
+  </p>
+</ng-template>

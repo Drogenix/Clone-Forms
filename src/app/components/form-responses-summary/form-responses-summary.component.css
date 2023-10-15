@@ -1,0 +1,35 @@
+:host{
+  --tui-chart-0: rgb(51,102,204);
+  --tui-chart-1: rgb(220,57,18);
+  --tui-chart-2: #ff5f6d;
+  --tui-chart-3: rgb(255,153,0);;
+  --tui-chart-4: #9795cd;
+  --tui-chart-5: rgb(51, 181, 204);
+  --tui-chart-6: rgb(220, 217, 18);
+  --tui-chart-7: #9aff5f;
+  --tui-chart-8: rgb(255, 0, 251);
+  --tui-chart-9: #cd95b3;
+  --tui-chart-10: rgb(38, 0, 0);
+  --tui-chart-11: #95cdcd;
+}
+
+.question-title{
+  font-size: 16px;
+  font-weight: bolder;
+}
+
+.question-total-answers{
+  font-size: 14px;
+}
+
+.answers{
+  margin-top: 12px;
+}
+
+.text-answer{
+  font-size: 15px;
+  padding: 10px;
+  border-radius: 6px;
+  margin-top: 8px;
+  background-color: rgb(248,249,250);
+}

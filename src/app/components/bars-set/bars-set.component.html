@@ -1,0 +1,30 @@
+<tui-axes class="bars-set-axes"
+          [axisXLabels]="axisXLabels"
+          [axisYLabels]="axisYLabels"
+          [verticalLines]="verticalLines">
+  <div class="bars">
+    <ng-container *ngFor="let bar of value; let i = index">
+      <div class="bar-line">
+        <div class="bar"
+             [style.width]="((bar * 100) / maxBarValue)+'%'">
+          <tui-bar size="l"
+                   tuiHintPointer
+                   (mouseenter)="onMouseEnter(i)"
+                   (mouseleave)="onMouseLeave()"
+                   [tuiHint]="chartHint"
+                   [tuiHintAppearance]="'onDark'"
+                   [tuiHintContext]="{$implicit:activeIndex}"
+                   [style.background-color]="getColor(i)">
+          </tui-bar>
+          <span class="bar-label">{{bar + ' (' + valuePercentage[i] + '%)'}}</span>
+        </div>
+      </div>
+    </ng-container>
+  </div>
+</tui-axes>
+<ng-template #chartHint let-index>
+  <div>
+    <p>{{axisYLabels[index]}}</p>
+    <p>{{value[index] | formatResponsesTotal}} ({{valuePercentage[index]}}%)</p>
+  </div>
+</ng-template>

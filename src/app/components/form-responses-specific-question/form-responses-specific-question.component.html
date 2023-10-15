@@ -1,0 +1,121 @@
+<ng-container
+  *ngIf="formResponsesData$ | async as formResponsesData; else loading"
+>
+  <div class="form-block">
+    <tui-select
+      [tuiTextfieldLabelOutside]="true"
+      [formControl]="selectedQuestion"
+      [valueContent]="itemContent"
+    >
+      <tui-data-list-wrapper
+        *tuiDataList
+        [itemContent]="itemContent"
+        [items]="selectItems"
+      ></tui-data-list-wrapper>
+      <ng-template #itemContent let-data>
+        <div>{{ data.title }}</div>
+      </ng-template>
+    </tui-select>
+    <div
+      class="offered-answers"
+      *ngIf="formResponsesData.form.questions[selectedIndex].answerType.group === 1">
+      <p>Варианты ответов:</p>
+      <ng-container
+        *ngFor="let answer of formResponsesData.form.questions[selectedIndex].answers.offeredAnswers">
+        <ng-container
+          *ngTemplateOutlet="
+            answerTemp;
+            context: {
+              answerType:
+                formResponsesData.form.questions[selectedIndex].answerType,
+              answer: answer,
+              inputsChecked: false
+            }
+          "
+        ></ng-container>
+      </ng-container>
+      <ng-container *ngIf="formResponsesData.form.questions[selectedIndex].answers.anotherAnswer">
+        <ng-container
+          *ngTemplateOutlet="
+            answerTemp;
+            context: {
+              answerType:
+                formResponsesData.form.questions[selectedIndex].answerType,
+              answer: formResponsesData.form.questions[selectedIndex].answers.anotherAnswer,
+              isAnotherAnswer:true,
+              inputsChecked: false
+            }
+          "
+        ></ng-container>
+      </ng-container>
+    </div>
+  </div>
+  <ng-container
+    *ngIf="formResponsesData.responsesGroups.length > 0; else noResponses"
+  >
+    <div
+      class="form-block group"
+      *ngFor="let response of formResponsesData.responsesGroups"
+    >
+      <div *ngFor="let answer of response.answers">
+        <ng-container
+          *ngTemplateOutlet="
+            answerTemp;
+            context: {
+              answerType: formResponsesData.form.questions[selectedIndex].answerType,
+              answer: answer,
+              inputsChecked: true
+            }
+          "
+        ></ng-container>
+      </div>
+      <div class="response-repeats">
+        <p>Количество ответов - {{ response.totalRepeats }}</p>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noResponses>
+    <div class="form-block">
+      <p class="italic">Нет ответов на этот вопрос</p>
+    </div>
+  </ng-template>
+</ng-container>
+<ng-template
+  #answerTemp
+  let-answerType="answerType"
+  let-answer="answer"
+  let-isAnotherAnswer="isAnotherAnswer"
+  let-checked="inputsChecked"
+>
+  <div [ngSwitch]="answerType.name">
+    <div *ngSwitchCase="'TextShort'">
+      <div class="answer">
+        <p>{{ answer.value }}</p>
+      </div>
+    </div>
+    <div *ngSwitchCase="'TextLarge'">
+      <div class="answer">
+        <p>{{ answer.value }}</p>
+      </div>
+    </div>
+    <div *ngSwitchCase="'OneOfTheList'">
+      <div class="answer">
+        <div>
+          <input type="radio" [checked]="checked" disabled />
+        </div>
+        <p>{{isAnotherAnswer ? 'Другое' : answer.value }}</p>
+      </div>
+    </div>
+    <div *ngSwitchCase="'FewOfTheList'">
+      <div class="answer">
+        <div>
+          <input type="checkbox" [checked]="checked" disabled />
+        </div>
+        <p>{{isAnotherAnswer ? 'Другое' : answer.value}}</p>
+      </div>
+    </div>
+  </div>
+</ng-template>
+<ng-template #loading>
+  <app-page-spinner></app-page-spinner>
+</ng-template>

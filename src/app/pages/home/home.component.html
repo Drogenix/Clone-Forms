@@ -1,0 +1,169 @@
+<app-header>
+  <p h-brend-content class="header-brend-text">Формы</p>
+  <div class="search-wrapper" disableAnimation h-content>
+    <div
+      [tuiDropdown]="searchResult"
+      [tuiDropdownManual]="showSearchResult && searchInput.value != ''"
+      [tuiDropdownOffset]="0"
+      [tuiDropdownAppearance]="'searchResult'"
+      [tuiDropdownLimitWidth]="'fixed'"
+      [tuiDropdownMaxHeight]="178"
+      [tuiDropdownAlign]="'center'"
+      [attr.data-empty]="searchInput.value === ''"
+      [attr.data-focused]="searchFocused"
+      (tuiActiveZoneChange)="onSearchActiveZoneChange($event)"
+      class="header-search"
+    >
+      <button>
+        <img alt="Поиск" src="assets/img/search.svg" />
+      </button>
+      <input #searchInput placeholder="Поиск" />
+      <ng-template #searchResult>
+        <ng-container *ngIf="searchResult$ | async as results">
+          <div class="search-result" *ngIf="results.length > 0; else noResult">
+            <a
+              class="search-item"
+              [routerLink]="['form', result.formId, 'edit']"
+              *ngFor="let result of results"
+            >
+              <img src="assets/img/forms-brend.png" />
+              <p class="search-item-title">{{ result.name }}</p>
+              <span class="search-item-last-update">12 мая, 2023</span>
+            </a>
+          </div>
+          <ng-template #noResult>
+            <div class="search-no-results">
+              <p class="forms-not-found-message">
+                Не найдено элементов, соответствующих запросу.
+              </p>
+            </div>
+          </ng-template>
+        </ng-container>
+      </ng-template>
+    </div>
+  </div>
+</app-header>
+<main>
+  <section class="bg-gray">
+    <div class="container">
+      <h1>Создать форму</h1>
+      <div class="form-templates-grid">
+        <article>
+          <button class="card-border" (click)="createNewForm()">
+            <img
+              class="card-img"
+              src="assets/img/add-file.png"
+              alt="Создать новую форму"
+            />
+          </button>
+          <p class="hide-overflow">Новая форма</p>
+        </article>
+      </div>
+    </div>
+  </section>
+  <ng-container *ngIf="forms$ | async as forms; else loading">
+    <section>
+      <div class="container">
+        <div class="user-forms-header">
+          <h2>Недавние формы</h2>
+          <div class="header-menu">
+            <button
+              class="user-forms-btn"
+              [tuiDropdown]="sort"
+              [tuiDropdownManual]="showSortOptions"
+              [tuiDropdownAlign]="'center'"
+              (tuiActiveZoneChange)="showSortOptions = $event"
+              (click)="showSortOptions = true"
+            >
+              <img height="22" width="22" src="assets/img/sort.png" />
+            </button>
+            <ng-template #sort>
+              <div class="dropdown-menu">
+                <button
+                  class="menu-item"
+                  *ngFor="let option of sortOptions; let i = index"
+                  (click)="changeSortOption(i)"
+                >
+                  <div class="dropdown-menu-item-selected">
+                    <img
+                      *ngIf="selectedSortOption === i"
+                      class="icon-sm"
+                      src="assets/icon/check.svg"
+                    />
+                  </div>
+                  <p>{{ option.name }}</p>
+                </button>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+        <div class="user-forms-grid" *ngIf="forms.length > 0; else noForms">
+          <article
+            class="card-border"
+            [routerLink]="['form', form.formId, 'edit']"
+            *ngFor="let form of forms; let i = index"
+          >
+            <div class="form-item-img-wrapper">
+              <img [src]="form.previewImg" class="card-img" />
+            </div>
+            <div class="form-item-footer">
+              <p class="form-name hide-overflow">
+                {{ form.name }}
+              </p>
+              <div class="form-item-menu">
+                <p>
+                  Изменено:
+                  <br />
+                  {{ form.lastUpdate | lastUpdateDate | lowercase }}
+                </p>
+                <button
+                  class="user-forms-btn"
+                  [tuiDropdown]="menuContent"
+                  [tuiDropdownManual]="
+                    activeMenuIndex === i ? openFormMenu : false
+                  "
+                  [tuiDropdownAlign]="'center'"
+                  (tuiActiveZoneChange)="onActiveZone($event)"
+                  (click)="openMenu($event, i)"
+                >
+                  <img src="assets/img/menu.png" alt="Меню формы" />
+                </button>
+                <ng-template #menuContent>
+                  <div class="dropdown-menu">
+                    <button
+                      class="menu-item"
+                      (click)="openRenameDialog(forms[activeMenuIndex])"
+                    >
+                      <img src="assets/icon/t-t.png" />
+                      <p>Переименование</p>
+                    </button>
+                    <button
+                      class="menu-item"
+                      (click)="openDeleteDialog(forms, activeMenuIndex)"
+                    >
+                      <img src="assets/icon/delete.png" />
+                      <p>Удалить</p>
+                    </button>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </article>
+        </div>
+        <ng-template #noForms>
+          <div class="no-forms-info">
+            <img src="assets/img/folder.png" />
+            <p class="header-3">Форм нет</p>
+            <p class="no-forms-message">
+              Чтобы создать форму, нажмите на кнопку "Новая форма" выше
+            </p>
+          </div>
+        </ng-template>
+      </div>
+    </section>
+  </ng-container>
+  <ng-template #loading>
+    <app-page-spinner></app-page-spinner>
+  </ng-template>
+</main>
+<app-page-spinner *ngIf="loading$ | async"></app-page-spinner>

@@ -1,1 +1,286 @@
-/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('dialogs.css');
+
+*, *:before, *:after{
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root{
+  --ff-default: 'Open Sans', sans-serif;
+  --clr-gray: #f1f3f4;
+  --clr-text: #202124;
+}
+
+body, html{
+  height: 100%;
+}
+
+body{
+  font-family: var(--ff-default) !important;
+  font-size: initial !important;
+  line-height: normal !important;
+}
+
+app-root{
+  flex-direction: column;
+  display: flex;
+  height: 100%;
+}
+
+a, button{
+  cursor: pointer;
+}
+
+input:focus{
+  outline: none;
+}
+
+input[type='radio'], input[type='checkbox']{
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: transparent;
+  margin: 0;
+  height: 20px;
+  width: 20px;
+  border: 2px solid #5f6368;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type='radio']{
+  border-radius: 50%;
+}
+
+input[type='radio']:before{
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  scale: 0;
+  transition: 200ms transform ease-in-out;
+  background-color: #673ab7;
+}
+
+input[type='radio']:after, input[type='checkbox']:after{
+  position: absolute;
+  top: -10px;
+  left: -10px;
+  bottom: 0;
+  display: block;
+  content: "";
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  scale: 0;
+  transition: 200ms all;
+  background-color: rgba(103, 58, 183, 0.14);
+}
+
+input[type='checkbox']:before{
+  content: "";
+  position: relative;
+  top: 2px;
+  width: 14px;
+  height: 14px;
+  scale: 0;
+  background-size: contain;
+  background-image: url("assets/img/check.png");
+}
+
+input[type="radio"]:checked{
+  border-color: #673ab7;
+}
+
+input[type='checkbox']:checked{
+  background: #673ab7;
+}
+
+input[type="radio"]:disabled, input[type="checkbox"]:disabled{
+  border-color: #9da5ab;
+}
+
+input[type="radio"]:disabled:before{
+  background: #9da5ab;
+}
+
+input[type="checkbox"]:checked:disabled{
+  background: #9da5ab;
+}
+
+input[type="radio"]:checked::before, input[type='checkbox']:checked::before {
+  scale: 1;
+}
+
+input[type="radio"]:is(:focus, :hover):not(:disabled)::after, input[type='checkbox']:is(:focus, :hover):not(:disabled)::after {
+  scale: 1;
+}
+
+.container{
+  max-width: 1150px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+.action-btn{
+  border-radius: 50%;
+  border: none;
+  background-color: transparent;
+}
+
+.action-btn:hover{
+  background-color: #e7e9ee;
+}
+
+.action-btn:active{
+  background-color: #e9d2fd;
+}
+
+.form-block{
+  position: relative;
+  display: block;
+  border-radius: 6px;
+  padding: 24px;
+  margin-bottom: 12px;
+  border: 1px solid lightgray;
+  background: white;
+}
+
+.form-title-input{
+  font-size: clamp(20px, 2vw + 2px, 28px);
+}
+
+.required-mark{
+  color: #d93025;
+  position: relative;
+  left: 6px;
+  bottom: 4px;
+}
+
+.nav-link{
+  position: relative;
+  padding: 8px 16px;
+  color: var(--clr-text);
+  text-decoration: none;
+  border-radius: 6px 6px 0 0;
+  border: none;
+  font-weight: bold;
+  font-size: 14px;
+  background-color: transparent;
+  transition: 100ms;
+}
+
+.active{
+  color: rgb(76, 43, 135);
+}
+
+.active:before{
+  display: block;
+  position: absolute;
+  content: '';
+  border-radius: 6px 6px 0 0;
+  width: 100%;
+  height: 4px;
+  inset: calc(100% - 4px) 0 0 0;
+  background-color: #673ab7;
+  transition: all 200ms;
+}
+
+.cdk-drag-preview{
+  background: white;
+  box-shadow: 0 0 6px lightgray;
+}
+
+.cdk-drag:not(.cdk-drag-preview){
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+*::-webkit-scrollbar{
+  width: 10px;
+}
+
+*::-webkit-scrollbar-thumb:hover{
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+*::-webkit-scrollbar-thumb{
+  background-color: rgba(0,0,0,.2);
+  background-clip: padding-box;
+  min-height: 28px;
+  padding: 100px 0 0;
+  -webkit-box-shadow: inset 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07);
+  box-shadow: inset 1px 1px 0 rgba(0,0,0,.1), inset 0 -1px 0 rgba(0,0,0,.07);
+}
+
+*::-webkit-scrollbar-track{
+  border: solid transparent;
+  border-width: 0 2px 0 2px;
+}
+
+.hide-overflow{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@media (width < 576px) {
+  app-form-question.cdk-drag-preview{
+    max-height: 164px;
+  }
+}
+
+.editable{
+  color: var(--clr-text);
+  outline: none;
+  cursor: text;
+  border: none;
+  background: transparent;
+  padding-bottom: 0.3em;
+}
+
+.secondary-btn{
+  text-decoration: none;
+  color: #673ab7;
+  background: transparent;
+  padding: 0 8px;
+}
+
+.secondary-btn:is(:hover,:active){
+  background-color: #f0ecf8;;
+}
+
+.primary-btn{
+  background-color: #673ab7;
+  color: white;
+  padding: 0 24px;
+}
+
+.primary-btn:is(:active,:hover):not(:disabled){
+  background-color: #512896;
+}
+
+.show-password{
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin:12px 0;
+}
+
+.show-password p{
+  font-size: 14px;
+}
+
+input[type='checkbox']:hover:not(:checked):after{
+  background-color: rgb(195 168 168 / 14%);
+}
+
+.invisible{
+  position: fixed;
+  inset:0;
+  z-index: -999;
+}

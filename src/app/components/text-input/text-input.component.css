@@ -1,0 +1,39 @@
+:host{
+  display: flex;
+}
+
+:host > div{
+  display: flex;
+  flex: 1 1;
+}
+
+input{
+  background: transparent;
+  border: none;
+  font-size: 15px;
+  flex: 1 1;
+}
+
+input::placeholder{
+  color: #70757a;
+}
+
+.input-wrapper{
+  position: relative;
+}
+
+.input-wrapper:focus-within:after{
+  scale: 1;
+}
+
+.input-wrapper:after{
+  content: '';
+  display: block;
+  position: absolute;
+  inset: calc(100% - 2px) 0 0 0;
+  background: #673ab7;
+  height: 2px;
+  width: 100%;
+  scale: 0;
+  transition: 100ms;
+}

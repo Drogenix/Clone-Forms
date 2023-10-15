@@ -1,0 +1,21 @@
+<ng-container *ngIf="formResponses$ | async as data; else loading">
+  <ng-container *ngIf="data.formResponses.length > 0; else noResponses">
+    <div class="form-block sticky-block">
+      <app-counter [min]="1"
+                   [max]="data.formResponses.length"
+                   [value]="1"
+                   (onChange)="onCounterChange($event)"></app-counter>
+    </div>
+    <app-form-view [editable]="false"
+                   [viewForm]="data.form"
+                   [formResponse]="data.formResponses[activeIndex]"></app-form-view>
+  </ng-container>
+  <ng-template #noResponses>
+    <div class="form-block">
+      <p class="no-responses-message">Здесь пока нет ответов</p>
+    </div>
+  </ng-template>
+</ng-container>
+<ng-template #loading>
+  <app-page-spinner></app-page-spinner>
+</ng-template>

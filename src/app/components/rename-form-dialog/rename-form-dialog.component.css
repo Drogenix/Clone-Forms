@@ -1,0 +1,13 @@
+.rename-input{
+  display: flex;
+  width: 100%;
+  color: var(--clr-text);
+  border: 1px solid lightgray;
+  padding: 10px 12px;
+  margin-bottom: 18px;
+  border-radius: 4px;
+}
+
+.rename-input:focus{
+  border-color: #673ab7;
+}

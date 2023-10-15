@@ -1,0 +1,9 @@
+<p class="dialog-header">Переименование</p>
+<p class="dialog-label">Введите новое значение</p>
+<input [formControl]="formName" class="rename-input" placeholder="Название">
+<div class="dialog-buttons">
+  <button class="dialog-cancel" (click)="cancel()">Отменить</button>
+  <button [disabled]="formName.invalid"
+          (click)="submit()"
+          class="dialog-submit">Ок</button>
+</div>

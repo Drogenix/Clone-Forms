@@ -1,0 +1,57 @@
+:host{
+  display: flex;
+}
+
+.pie-chart-container{
+  position: relative;
+  display: block;
+  margin: 0 auto;
+}
+
+@media screen and (max-width:576px) {
+  .pie-chart-container{
+    margin: 0;
+  }
+}
+
+
+.pie-diagram-labels{
+  position: absolute;
+  display: flex;
+  top: 0;
+  left: calc(100% + 24px);
+  flex-direction: column;
+}
+
+.pie-label{
+  display: flex;
+  align-items: center;
+  min-width: max-content;
+}
+
+.pie-label p{
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.label-bullet{
+  display: block;
+  flex-shrink: 0;
+  content: '';
+  border-radius: 50%;
+  height: 12px;
+  width: 12px;
+  margin-right: 4px;
+}
+
+@media screen and (max-width: 404px){
+  .pie-diagram-labels{
+    position: static;
+    margin-top: 24px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 12px;
+  }
+}
+
+

@@ -1,0 +1,294 @@
+[
+  {
+    "id": "0",
+    "userId": 0,
+    "title":"Lorem ipsum",
+    "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec tortor dolor. Vestibulum et dolor massa. Nulla ac diam urna. Sed egestas facilisis turpis id lobortis. Curabitur fermentum finibus imperdiet. Sed faucibus lorem non nisi vulputate, ac pharetra massa ultrices. Cras nisl dolor, vestibulum eu ornare sed, fringilla et arcu.",
+    "questions":[
+      {
+        "id":0,
+        "title":"Lorem ipsum 1",
+        "answerType":{
+          "name":"TextShort",
+          "group":0
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":""
+            }
+          ]
+        },
+        "order":2,
+        "required":true
+      },
+      {
+        "id":1,
+        "title":"Lorem ipsum 3",
+        "answerType":{
+          "name":"OneOfTheList",
+          "group":1
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":"Вариант 1"
+            },
+            {
+              "id":1,
+              "value":"Вариант 2"
+            },          {
+              "id":2,
+              "value":"Вариант 3"
+            }
+          ]
+        },
+        "order":3,
+        "required":true
+      },
+      {
+        "id":2,
+        "title":"Lorem ipsum 4",
+        "answerType":{
+          "name":"FewOfTheList",
+          "group":1
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":"Вариант 1"
+            },
+            {
+              "id":1,
+              "value":"Вариант 2"
+            },          {
+              "id":2,
+              "value":"Вариант 3"
+            }
+          ]
+        },
+        "order":3,
+        "required":false
+      },
+      {
+        "id":3,
+        "title":"Lorem ipsum 5",
+        "answerType":{
+          "name":"FewOfTheList",
+          "group":1
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":"Вариант 1"
+            },
+            {
+              "id":1,
+              "value":"Вариант 2"
+            },          {
+              "id":2,
+              "value":"Вариант 3"
+            }
+          ]
+        },
+        "order":1,
+        "required":true
+      }
+    ],
+    "lastUpdate": "2023-04-19T08:01:49.947Z"
+  },
+  {
+    "id": "1",
+    "userId": 1,
+    "title":"Lorem ipsum",
+    "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec tortor dolor. Vestibulum et dolor massa. Nulla ac diam urna. Sed egestas facilisis turpis id lobortis. Curabitur fermentum finibus imperdiet. Sed faucibus lorem non nisi vulputate, ac pharetra massa ultrices. Cras nisl dolor, vestibulum eu ornare sed, fringilla et arcu.",
+    "questions":[
+      {
+        "id":0,
+        "title":"Lorem ipsum 1",
+        "answerType":{
+          "name":"TextShort",
+          "group":0
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":""
+            }
+          ]
+        },
+        "order":2,
+        "required":false
+      },
+      {
+        "id":1,
+        "title":"Lorem ipsum 2",
+        "answerType":{
+          "name":"TextLarge",
+          "group":0
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":""
+            }
+          ]
+        },
+        "order":1,
+        "required":false
+      },
+      {
+        "id":2,
+        "title":"Lorem ipsum 3",
+        "answerType":{
+          "name":"OneOfTheList",
+          "group":1
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":"Вариант 1"
+            },
+            {
+              "id":1,
+              "value":"Вариант 2"
+            },          {
+              "id":2,
+              "value":"Вариант 3"
+            }
+          ]
+        },
+        "order":3,
+        "required":false
+      },
+      {
+        "id":3,
+        "title":"Lorem ipsum 4",
+        "answerType":{
+          "name":"FewOfTheList",
+          "group":1
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":"Вариант 1"
+            },
+            {
+              "id":1,
+              "value":"Вариант 2"
+            },          {
+              "id":2,
+              "value":"Вариант 3"
+            }
+          ]
+        },
+        "order":4,
+        "required":false
+      }
+    ],
+    "lastUpdate": "2023-04-19T08:01:49.947Z"
+  },
+  {
+    "id": "2",
+    "userId": 0,
+    "title":"Lorem ipsum 2",
+    "description":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum nec tortor dolor. Vestibulum et dolor massa. Nulla ac diam urna. Sed egestas facilisis turpis id lobortis. Curabitur fermentum finibus imperdiet. Sed faucibus lorem non nisi vulputate, ac pharetra massa ultrices. Cras nisl dolor, vestibulum eu ornare sed, fringilla et arcu.",
+    "questions":[
+      {
+        "id":0,
+        "title":"Lorem ipsum 1",
+        "answerType":{
+          "name":"TextShort",
+          "group":0
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":""
+            }
+          ]
+        },
+        "order":2,
+        "required":false
+      },
+      {
+        "id":1,
+        "title":"Lorem ipsum 2",
+        "answerType":{
+          "name":"TextLarge",
+          "group":0
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":""
+            }
+          ]
+        },
+        "order":1,
+        "required":false
+      },
+      {
+        "id":2,
+        "title":"Lorem ipsum 3",
+        "answerType":{
+          "name":"OneOfTheList",
+          "group":1
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":"Вариант 1"
+            },
+            {
+              "id":1,
+              "value":"Вариант 2"
+            },          {
+              "id":2,
+              "value":"Вариант 3"
+            }
+          ]
+        },
+        "order":3,
+        "required":false
+      },
+      {
+        "id":3,
+        "title":"Lorem ipsum 4",
+        "answerType":{
+          "name":"FewOfTheList",
+          "group":1
+        },
+        "answers":{
+          "offeredAnswers":[
+            {
+              "id":0,
+              "value":"Вариант 1"
+            },
+            {
+              "id":1,
+              "value":"Вариант 2"
+            },          {
+              "id":2,
+              "value":"Вариант 3"
+            }
+          ]
+        },
+        "order":4,
+        "required":false
+      }
+    ],
+    "lastUpdate": "2023-04-19T08:01:49.947Z"
+  }
+]
