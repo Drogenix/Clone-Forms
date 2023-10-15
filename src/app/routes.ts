@@ -37,13 +37,13 @@ const FORM_RESPONSES_ROUTES: Routes = [
 ];
 
 const AUTHORIZED_GUARD =
-  (authorized: boolean, redirectUrl: 'sign-in' | '') =>
+  (shouldBeAuthorized: boolean, redirectUrl: 'sign-in' | '') =>
   (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const userService = inject(UserService);
 
     return userService.authorized$.pipe(
       map((value) => {
-        return value === authorized
+        return value === shouldBeAuthorized
           ? true
           : createUrlTreeFromSnapshot(route.root, [redirectUrl]);
       }),
