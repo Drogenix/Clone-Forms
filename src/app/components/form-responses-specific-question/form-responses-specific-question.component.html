@@ -18,7 +18,7 @@
     </tui-select>
     <div
       class="offered-answers"
-      *ngIf="formResponsesData.form.questions[selectedIndex].answerType.group === 1">
+      *ngIf="formResponsesData.form.questions[selectedIndex].questionType.group === 1">
       <p>Варианты ответов:</p>
       <ng-container
         *ngFor="let answer of formResponsesData.form.questions[selectedIndex].answers.offeredAnswers">
@@ -26,8 +26,8 @@
           *ngTemplateOutlet="
             answerTemp;
             context: {
-              answerType:
-                formResponsesData.form.questions[selectedIndex].answerType,
+              questionType:
+                formResponsesData.form.questions[selectedIndex].questionType,
               answer: answer,
               inputsChecked: false
             }
@@ -39,8 +39,8 @@
           *ngTemplateOutlet="
             answerTemp;
             context: {
-              answerType:
-                formResponsesData.form.questions[selectedIndex].answerType,
+              questionType:
+                formResponsesData.form.questions[selectedIndex].questionType,
               answer: formResponsesData.form.questions[selectedIndex].answers.anotherAnswer,
               isAnotherAnswer:true,
               inputsChecked: false
@@ -62,7 +62,7 @@
           *ngTemplateOutlet="
             answerTemp;
             context: {
-              answerType: formResponsesData.form.questions[selectedIndex].answerType,
+              questionType: formResponsesData.form.questions[selectedIndex].questionType,
               answer: answer,
               inputsChecked: true
             }
@@ -82,12 +82,12 @@
 </ng-container>
 <ng-template
   #answerTemp
-  let-answerType="answerType"
+  let-questionType="questionType"
   let-answer="answer"
   let-isAnotherAnswer="isAnotherAnswer"
   let-checked="inputsChecked"
 >
-  <div [ngSwitch]="answerType.name">
+  <div [ngSwitch]="questionType.name">
     <div *ngSwitchCase="'TextShort'">
       <div class="answer">
         <p>{{ answer.value }}</p>
@@ -98,7 +98,7 @@
         <p>{{ answer.value }}</p>
       </div>
     </div>
-    <div *ngSwitchCase="'OneOfTheList'">
+    <div *ngSwitchCase="'OneChoice'">
       <div class="answer">
         <div>
           <input type="radio" [checked]="checked" disabled />
@@ -106,7 +106,7 @@
         <p>{{isAnotherAnswer ? 'Другое' : answer.value }}</p>
       </div>
     </div>
-    <div *ngSwitchCase="'FewOfTheList'">
+    <div *ngSwitchCase="'MultipleChoice'">
       <div class="answer">
         <div>
           <input type="checkbox" [checked]="checked" disabled />

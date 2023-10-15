@@ -174,7 +174,7 @@ export class FormsResponsesService {
       questionAnswers: [],
     };
 
-    if (question.answerType.group === 0) {
+    if (question.questionType.group === 0) {
       for (let i = 0; i < questionAnswers.length; i++) {
         const questionResponseAnswerInfo: QuestionResponseAnswerInfo = {
           answer: questionAnswers[i],

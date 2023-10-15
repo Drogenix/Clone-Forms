@@ -13,9 +13,9 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../components/header/header.component';
 import { FormQuestionComponent } from '../../components/form-question/form-question.component';
 import { FormBuilder, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { AnswerTypeName } from '../../core/enum/answer-type-name';
+import { QuestionTypeName } from '../../core/enum/question-type-name';
 import { Question } from '../../core/entity/question';
-import { AnswerTypeGroup } from '../../core/enum/answer-type-group';
+import { QuestionTypeGroup } from '../../core/enum/question-type-group';
 import { FormBuilderMenuComponent } from '../../components/form-builder-menu/form-builder-menu.component';
 import {
   CdkDrag,
@@ -81,14 +81,12 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   @ViewChild('main', { static: true }) mainRef: ElementRef<HTMLDivElement>;
   @ViewChild('formCont') formRef: ElementRef;
   readonly DESCRIPTION_BLOCK_INDEX = -1;
-
   form = this.fb.group({
     id: '0',
     title: 'Новая форма',
     description: '',
     questions: this.fb.array<FormControl<Question>>([]),
   });
-
   selected: number = 0;
   get questions() {
     return this.form.controls.questions;
@@ -100,7 +98,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     private alertService: TuiAlertService,
     private destroy$: TuiDestroyService,
     private route: ActivatedRoute,
-    private cdf: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef,
     private viewRef: ViewContainerRef,
     private formService: FormsService,
     private readonly injector: Injector,
@@ -150,6 +148,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.formService.saveFormState(this.form.value as Form);
   }
+
   private _notifyDelete(index: number, deletedQuestion: FormControl<Question>) {
     this.alertService
       .open<boolean>(new PolymorpheusComponent(AlertComponent, this.injector), {
@@ -161,10 +160,11 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       .subscribe((cancelDelete) => {
         if (cancelDelete) {
           this.questions.insert(index, deletedQuestion);
-          this.cdf.markForCheck();
+          this.cdr.markForCheck();
         }
       });
   }
+
   private _changeItemOrder(previousIndex: number, currentIndex: number) {
     const draggedItem = this.questions.controls[previousIndex].value;
 
@@ -181,18 +181,20 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
     this.setBlockAsSelected(currentIndex);
   }
+
   setBlockAsSelected(index: number) {
     this.selected = index;
   }
+
   addQuestion(emitEvent: boolean) {
     if (this.questions.length === QUESTIONS_MAX) return;
 
     const questionControl = this.fb.nonNullable.control<Question>({
       id: this.questions.length + 1,
       title: 'Вопрос без заголовка',
-      answerType: {
-        name: AnswerTypeName.OneOfTheList,
-        group: AnswerTypeGroup.List,
+      questionType: {
+        name: QuestionTypeName.OneChoice,
+        group: QuestionTypeGroup.List,
       },
       answers: {
         offeredAnswers: [
@@ -212,6 +214,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
     this.selected = this.questions.length - 1;
   }
+
   deleteQuestion(index: number) {
     if (this.questions.controls.length != 1) {
       const deletedQuestion = this.questions.at(index);
@@ -225,6 +228,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
       this._notifyDelete(index, deletedQuestion);
     }
   }
+
   copyQuestion(index: number) {
     if (this.questions.length === QUESTIONS_MAX) return;
 
@@ -242,19 +246,22 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
     this.setBlockAsSelected(this.questions.length - 1);
   }
+
   onQuestionDrop(event: CdkDragDrop<any>) {
     if (event.previousIndex != event.currentIndex) {
       this._changeItemOrder(event.previousIndex, event.currentIndex);
     }
   }
+
   canSort(index: number, drag: CdkDrag, drop: CdkDropList): boolean {
-    const sortedItems = drop.getSortedItems();
+    const dragListSortedItems = drop.getSortedItems();
 
     const dragged = drop.element.nativeElement.getElementsByClassName(
       'cdk-drag-preview',
     )[0] as HTMLElement;
 
-    const elementToSort = sortedItems[index]._dragRef.getVisibleElement();
+    const elementToSort =
+      dragListSortedItems[index]._dragRef.getVisibleElement();
 
     const draggedRect = dragged.getBoundingClientRect();
 

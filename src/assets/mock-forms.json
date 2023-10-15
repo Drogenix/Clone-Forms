@@ -8,7 +8,7 @@
       {
         "id":0,
         "title":"Lorem ipsum 1",
-        "answerType":{
+        "QuestionType":{
           "name":"TextShort",
           "group":0
         },
@@ -26,8 +26,8 @@
       {
         "id":1,
         "title":"Lorem ipsum 3",
-        "answerType":{
-          "name":"OneOfTheList",
+        "QuestionType":{
+          "name":"OneChoice",
           "group":1
         },
         "answers":{
@@ -51,8 +51,8 @@
       {
         "id":2,
         "title":"Lorem ipsum 4",
-        "answerType":{
-          "name":"FewOfTheList",
+        "QuestionType":{
+          "name":"MultipleChoice",
           "group":1
         },
         "answers":{
@@ -76,8 +76,8 @@
       {
         "id":3,
         "title":"Lorem ipsum 5",
-        "answerType":{
-          "name":"FewOfTheList",
+        "QuestionType":{
+          "name":"MultipleChoice",
           "group":1
         },
         "answers":{
@@ -110,7 +110,7 @@
       {
         "id":0,
         "title":"Lorem ipsum 1",
-        "answerType":{
+        "QuestionType":{
           "name":"TextShort",
           "group":0
         },
@@ -128,7 +128,7 @@
       {
         "id":1,
         "title":"Lorem ipsum 2",
-        "answerType":{
+        "QuestionType":{
           "name":"TextLarge",
           "group":0
         },
@@ -146,8 +146,8 @@
       {
         "id":2,
         "title":"Lorem ipsum 3",
-        "answerType":{
-          "name":"OneOfTheList",
+        "QuestionType":{
+          "name":"OneChoice",
           "group":1
         },
         "answers":{
@@ -171,8 +171,8 @@
       {
         "id":3,
         "title":"Lorem ipsum 4",
-        "answerType":{
-          "name":"FewOfTheList",
+        "QuestionType":{
+          "name":"MultipleChoice",
           "group":1
         },
         "answers":{
@@ -205,7 +205,7 @@
       {
         "id":0,
         "title":"Lorem ipsum 1",
-        "answerType":{
+        "QuestionType":{
           "name":"TextShort",
           "group":0
         },
@@ -223,7 +223,7 @@
       {
         "id":1,
         "title":"Lorem ipsum 2",
-        "answerType":{
+        "QuestionType":{
           "name":"TextLarge",
           "group":0
         },
@@ -241,8 +241,8 @@
       {
         "id":2,
         "title":"Lorem ipsum 3",
-        "answerType":{
-          "name":"OneOfTheList",
+        "QuestionType":{
+          "name":"OneChoice",
           "group":1
         },
         "answers":{
@@ -266,8 +266,8 @@
       {
         "id":3,
         "title":"Lorem ipsum 4",
-        "answerType":{
-          "name":"FewOfTheList",
+        "QuestionType":{
+          "name":"MultipleChoice",
           "group":1
         },
         "answers":{

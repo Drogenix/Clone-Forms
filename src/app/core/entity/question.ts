@@ -1,14 +1,14 @@
-import {Answer} from "./answer";
-import {AnswerType} from "./answer-type";
+import { Answer } from './answer';
+import { QuestionType } from './question-type';
 
-export interface Question{
-  id:number;
-  title:string;
-  answerType: AnswerType;
-  answers:{
-    offeredAnswers:Answer[];
-    anotherAnswer?:Answer;
+export interface Question {
+  id: number;
+  title: string;
+  questionType: QuestionType;
+  answers: {
+    offeredAnswers: Answer[];
+    anotherAnswer?: Answer;
   };
-  order:number
-  required:boolean;
+  order: number;
+  required: boolean;
 }

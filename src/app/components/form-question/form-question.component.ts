@@ -25,11 +25,11 @@ import {
   TuiTextfieldControllerModule,
 } from '@taiga-ui/core';
 import { TuiForModule } from '@taiga-ui/cdk';
-import { AnswerTypeName } from '../../core/enum/answer-type-name';
+import { QuestionTypeName } from '../../core/enum/question-type-name';
 import { TextInputComponent } from '../text-input/text-input.component';
 import { FormAnswersComponent } from '../form-answers/form-answers.component';
 import { Question } from '../../core/entity/question';
-import { AnswerTypeGroup } from '../../core/enum/answer-type-group';
+import { QuestionTypeGroup } from '../../core/enum/question-type-group';
 import { QuestionTypeSelectComponent } from '../question-type-select/question-type-select.component';
 import {
   CdkDrag,
@@ -82,9 +82,9 @@ export class FormQuestionComponent
   questionForm = this.fb.nonNullable.group<Question>({
     id: 0,
     title: '',
-    answerType: {
-      name: AnswerTypeName.OneOfTheList,
-      group: AnswerTypeGroup.List,
+    questionType: {
+      name: QuestionTypeName.OneChoice,
+      group: QuestionTypeGroup.List,
     },
     answers: {
       offeredAnswers: [],

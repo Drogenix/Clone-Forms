@@ -27,6 +27,7 @@ export class UserService {
   user: User | undefined;
   private _authorizedSub = new BehaviorSubject<boolean>(false);
   authorized$ = this._authorizedSub.asObservable();
+
   constructor(
     private http: HttpClient,
     private storage: LocalStorageService,

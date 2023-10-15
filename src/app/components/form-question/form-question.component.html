@@ -7,10 +7,10 @@
                             placeholder="Вопрос"></app-text-rich-editor>
       <span *ngIf="questionForm.controls.required.value === true" class="required-mark">*</span>
     </div>
-    <app-question-type-select formControlName="answerType"></app-question-type-select>
+    <app-question-type-select formControlName="QuestionType"></app-question-type-select>
   </div>
   <app-form-answers formControlName="answers"
-                    [answerType]="questionForm.controls.answerType.value"></app-form-answers>
+                    [questionType]="questionForm.controls.questionType.value"></app-form-answers>
   <div class="form-question-bottom-menu">
     <button class="action-btn"
             [tuiHint]="'Копировать вопрос'"

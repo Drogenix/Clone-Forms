@@ -8,7 +8,7 @@
         {
           "id": 4,
           "title": "1. В каком классе вы учитесь?",
-          "answerType": {
+          "questionType": {
             "name": "TextShort",
             "group": 0
           },
@@ -26,8 +26,8 @@
         {
           "id": 0,
           "title": "2. Столица Канады",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -60,8 +60,8 @@
         {
           "id": 2,
           "title": "3. Сколько океанов на Земле?",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -94,8 +94,8 @@
         {
           "id": 3,
           "title": "4. Самая высокая гора в мире?",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -128,8 +128,8 @@
         {
           "id": 5,
           "title": "5. Какие региональные единицы существуют в РБ?",
-          "answerType": {
-            "name": "FewOfTheList",
+          "questionType": {
+            "name": "MultipleChoice",
             "group": 1
           },
           "answers": {
@@ -166,8 +166,8 @@
         {
           "id": 6,
           "title": "6. Сколько было президентов в США?",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -211,8 +211,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка 1",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -240,8 +240,8 @@
         {
           "id": 2,
           "title": "Вопрос без заголовка 2",
-          "answerType": {
-            "name": "FewOfTheList",
+          "questionType": {
+            "name": "MultipleChoice",
             "group": 1
           },
           "answers": {
@@ -273,7 +273,7 @@
         {
           "id": 3,
           "title": "Вопрос без заголовка 3",
-          "answerType": {
+          "questionType": {
             "name": "TextShort",
             "group": 0
           },
@@ -291,7 +291,7 @@
         {
           "id": 4,
           "title": "Вопрос без заголовка 4",
-          "answerType": {
+          "questionType": {
             "name": "TextLarge",
             "group": 0
           },
@@ -316,8 +316,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -340,8 +340,8 @@
         {
           "id": 2,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -359,8 +359,8 @@
         {
           "id": 3,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -386,8 +386,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -413,8 +413,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -440,8 +440,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -467,8 +467,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -494,8 +494,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -521,8 +521,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -547,8 +547,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -584,8 +584,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {
@@ -610,8 +610,8 @@
         {
           "id": 0,
           "title": "Вопрос без заголовка",
-          "answerType": {
-            "name": "OneOfTheList",
+          "questionType": {
+            "name": "OneChoice",
             "group": 1
           },
           "answers": {

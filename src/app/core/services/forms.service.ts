@@ -17,7 +17,7 @@ import { UserService } from './user.service';
 import { FormDetails } from '../entity/form-details';
 import { Question } from '../entity/question';
 import { API_BASE_URL } from '../../api-url';
-import { AnswerTypeName } from '../enum/answer-type-name';
+import { QuestionTypeName } from '../enum/question-type-name';
 import { UuidGenerator } from './uuid-generator.service';
 import { FormResponse } from '../entity/form-response';
 import { AppError } from '../entity/app-error';
@@ -190,8 +190,8 @@ export class FormsService {
     const question: Question = {
       id: 0,
       title: 'Вопрос без заголовка',
-      answerType: {
-        name: AnswerTypeName.OneOfTheList,
+      questionType: {
+        name: QuestionTypeName.OneChoice,
         group: 1,
       },
       answers: {
@@ -209,7 +209,6 @@ export class FormsService {
 
     const form: Form = {
       id: this.uuidGenerator.generate(),
-      userId: this.userService.user!.id,
       title: 'Новая форма',
       description: '',
       questions: [question],

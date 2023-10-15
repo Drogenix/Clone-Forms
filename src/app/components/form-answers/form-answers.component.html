@@ -1,4 +1,4 @@
-<div [ngSwitch]="answerType.name">
+<div [ngSwitch]="questionType.name">
   <div *ngSwitchCase="'TextShort'" class="offered-answers">
     <app-text-input placeholder="Краткий ответ"
                     [disabled]="true"></app-text-input>
@@ -10,7 +10,7 @@
   <div class="answers"
        cdkDropList
        (cdkDropListDropped)="onDrop($event)"
-       *ngSwitchCase="'OneOfTheList'">
+       *ngSwitchCase="'OneChoice'">
     <div class="offered-answers">
       <div class="answer"
            cdkDrag
@@ -49,7 +49,7 @@
   <div class="answers"
        cdkDropList
        (cdkDropListDropped)="onDrop($event)"
-       *ngSwitchCase="'FewOfTheList'">
+       *ngSwitchCase="'MultipleChoice'">
     <div class="offered-answers">
       <div class="answer"
            cdkDrag
@@ -85,11 +85,11 @@
       </div>
     </div>
   </div>
-  <div class="add-answer-option" *ngIf="answerType.name === 'FewOfTheList' || answerType.name === 'OneOfTheList'">
-    <div *ngIf="answerType.name === 'FewOfTheList'">
+  <div class="add-answer-option" *ngIf="questionType.name === 'MultipleChoice' || questionType.name === 'OneChoice'">
+    <div *ngIf="questionType.name === 'MultipleChoice'">
       <input type="checkbox" disabled>
     </div>
-    <div *ngIf="answerType.name === 'OneOfTheList'">
+    <div *ngIf="questionType.name === 'OneChoice'">
       <input type="radio" disabled>
     </div>
     <button class="add-answer"

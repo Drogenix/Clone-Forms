@@ -7,7 +7,7 @@
     </div>
     <ng-container *ngIf="formData.questionsResponsesInfo[i].totalAnswers > 0">
       <div class="answers"
-           [ngSwitch]="question.answerType.name">
+           [ngSwitch]="question.questionType.name">
         <div *ngSwitchCase="'TextLarge'">
           <ng-container *ngFor="let questionResponse of formData.questionsResponsesInfo[i].questionAnswers">
             <p class="text-answer">
@@ -22,12 +22,12 @@
             </p>
           </ng-container>
         </div>
-        <app-pie-chart *ngSwitchCase="'OneOfTheList'"
+        <app-pie-chart *ngSwitchCase="'OneChoice'"
                        [value]="getAnswersTotalRepeats(formData.questionsResponsesInfo[i])"
                        [labels]="getAnswersText(formData.questionsResponsesInfo[i])">
         </app-pie-chart>
         <div>
-          <app-bars-set *ngSwitchCase="'FewOfTheList'"
+          <app-bars-set *ngSwitchCase="'MultipleChoice'"
                         [value]="getAnswersTotalRepeats(formData.questionsResponsesInfo[i])"
                         [axisYLabels]="getAnswersText(formData.questionsResponsesInfo[i])">
           </app-bars-set>

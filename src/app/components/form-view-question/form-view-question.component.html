@@ -2,7 +2,7 @@
   <span class="required-mark"
         *ngIf="question.required">*</span>
 </h2>
-<div class="form-answers" [ngSwitch]="question.answerType.name">
+<div class="form-answers" [ngSwitch]="question.questionType.name">
   <ng-container *ngFor="let answer of question.answers.offeredAnswers; let i = index">
     <div class="answer">
         <app-text-input placeholder="Краткий ответ"
@@ -17,7 +17,7 @@
                               [disabled]="disabled"
                               (onChange)="textAnswerChanged(answer, $event)">
         </app-text-rich-editor>
-        <ng-container *ngSwitchCase="'OneOfTheList'">
+        <ng-container *ngSwitchCase="'OneChoice'">
           <div>
             <input type="radio"
                    [name]="question.id"
@@ -27,7 +27,7 @@
           </div>
           <p>{{answer.value}}</p>
         </ng-container>
-        <ng-container *ngSwitchCase="'FewOfTheList'">
+        <ng-container *ngSwitchCase="'MultipleChoice'">
           <div>
             <input type="checkbox"
                    [checked]="isSelected(answer.id)"
@@ -39,7 +39,7 @@
     </div>
   </ng-container>
   <div class="answer another-answer" *ngIf="anotherAnswer">
-    <ng-container *ngSwitchCase="'OneOfTheList'">
+    <ng-container *ngSwitchCase="'OneChoice'">
       <div>
         <input type="radio"
                [name]="question.id"
@@ -52,7 +52,7 @@
                       [disabled]="disabled"
                       (onChange)="anotherAnswerChanged($event)"></app-text-input>
     </ng-container>
-    <ng-container *ngSwitchCase="'FewOfTheList'">
+    <ng-container *ngSwitchCase="'MultipleChoice'">
       <div>
         <input type="checkbox"
                [checked]="isSelected(anotherAnswer.id)"
