@@ -37,7 +37,10 @@ export class UserService {
   }
 
   private _setAuth(user: User) {
-    this.user = user;
+    this.user = {
+      login: user.login,
+      id: user.id,
+    };
     this._authorizedSub.next(true);
     this.storage.set(this.storageKey, JSON.stringify(user));
   }
@@ -46,7 +49,7 @@ export class UserService {
     const token = this.storage.get(this.storageKey);
     if (token) {
       const user = JSON.parse(token) as User;
-      return this.http.get(`${API_BASE_URL}/users/${user.id}`).pipe(
+      return this.http.get(`${API_BASE_URL}/users?id=${user.id}`).pipe(
         catchError((err: AppError) => {
           if (err.status === 404) {
             this.storage.remove(this.storageKey);
