@@ -4,7 +4,6 @@ export interface FormDetails {
   userId: string;
   formId: string;
   link: string;
-  previewImg: string;
   totalResponses: number;
   acceptResponses: boolean;
   formClosedMessage?: string;

@@ -19,8 +19,8 @@ import { Question } from '../entity/question';
 import { API_BASE_URL } from '../../api-url';
 import { QuestionTypeName } from '../enum/question-type-name';
 import { UuidGenerator } from './uuid-generator.service';
-import { FormResponse } from '../entity/form-response';
 import { AppError } from '../entity/app-error';
+import { FormUserResponse } from '../entity/form-user-response';
 
 const FORM_NOT_FOUND_ERROR: AppError = {
   status: 404,
@@ -38,6 +38,7 @@ export class FormsService {
   updatingData$: Observable<boolean> = this._updatingDataSub
     .asObservable()
     .pipe(shareReplay({ bufferSize: 1, refCount: true }));
+
   constructor(
     private http: HttpClient,
     private userService: UserService,
@@ -55,7 +56,7 @@ export class FormsService {
   ): Observable<FormDetails[]> {
     return this.http
       .get<FormDetails[]>(
-        `${API_BASE_URL}/forms-details?inTrash=true&_sort=${sortBy}&_order=${order}&name_like=${
+        `${API_BASE_URL}/forms-details?inTrash=true&sortBy=${sortBy}&order=${order}&name=${
           nameLike ? nameLike : ''
         }&userId=` + this.userService.user?.id,
       )
@@ -78,7 +79,9 @@ export class FormsService {
 
   getFormDetails(formId: string): Observable<FormDetails> {
     return this.http
-      .get<FormResponse[]>(`${API_BASE_URL}/form-responses?formId=` + formId)
+      .get<FormUserResponse[]>(
+        `${API_BASE_URL}/form-responses?formId=` + formId,
+      )
       .pipe(
         switchMap((formResponses) => {
           return this.http
@@ -114,13 +117,13 @@ export class FormsService {
       .get<FormDetails[]>(
         `${API_BASE_URL}/forms-details?userId=${
           this.userService.user!.id
-        }&inTrash=false&_sort=${sortBy}&_order=${order}`,
+        }&inTrash=false&sortBy=${sortBy}&order=${order}`,
       )
       .pipe(delay(300));
   }
   findByName(name: string): Observable<FormDetails[]> {
     return this.http.get<FormDetails[]>(
-      `${API_BASE_URL}/forms-details?inTrash=false&name_like=${name}&userId=${this.userService.user?.id}`,
+      `${API_BASE_URL}/forms-details?inTrash=false&name=${name}&userId=${this.userService.user?.id}`,
     );
   }
   getById(formId: string): Observable<Form> {
@@ -220,7 +223,6 @@ export class FormsService {
           formId: newForm.id,
           link: this.uuidGenerator.generate(),
           name: 'Новая форма',
-          previewImg: 'string',
           totalResponses: 0,
           acceptResponses: true,
           inTrash: false,
