@@ -36,7 +36,7 @@ export class FormViewQuestionComponent implements ControlValueAccessor {
   private _onChange: Function;
   private _onTouched: Function;
   private _touched: boolean = false;
-  constructor(private cdf: ChangeDetectorRef) {}
+  constructor(private cdr: ChangeDetectorRef) {}
   registerOnChange(fn: any): void {
     this._onChange = fn;
   }
@@ -47,6 +47,7 @@ export class FormViewQuestionComponent implements ControlValueAccessor {
 
   writeValue(value: FormQuestionResponse): void {
     this.questionResponse = value;
+
     if (this.question.answers.anotherAnswer) {
       this.anotherAnswer = this.question.answers.anotherAnswer;
 
@@ -54,12 +55,12 @@ export class FormViewQuestionComponent implements ControlValueAccessor {
         (answer) => answer.id === this.anotherAnswer.id,
       );
 
-      if (anotherAnswerResponseIndex != -1) {
-        this.anotherAnswer.value =
-          value.answers[anotherAnswerResponseIndex].value;
-      }
+      this.anotherAnswer.value =
+        anotherAnswerResponseIndex === -1
+          ? ''
+          : value.answers[anotherAnswerResponseIndex].value;
     }
-    this.cdf.markForCheck();
+    this.cdr.markForCheck();
   }
 
   private _onValueChange() {

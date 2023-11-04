@@ -27,6 +27,10 @@ app-text-input:hover{
   visibility: visible;
 }
 
+.cdk-drop-list-dragging .answer{
+  pointer-events: none;
+}
+
 .cdk-drag-handle{
   visibility: hidden;
   cursor: move;
@@ -46,10 +50,15 @@ app-text-input:hover{
 
 .answer{
   display: flex;
-  align-items: center;
+  flex-direction: column;
   position: relative;
   padding: 6px;
   margin-right: 20px;
+}
+
+.answer-edit{
+  display: flex;
+  align-items: center;
 }
 
 .answer .cdk-drag-handle{
@@ -60,7 +69,7 @@ app-text-input:hover{
   margin-left: 12px;
 }
 
-.answer:hover .action-btn{
+.answer:hover .answer-edit .action-btn{
   visibility: visible;
 }
 
@@ -107,7 +116,6 @@ app-text-input:hover{
 }
 
 .action-btn{
-  visibility: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -115,10 +123,63 @@ app-text-input:hover{
   width: 32px;
 }
 
-.cdk-drag-placeholder{
+.answer-edit .action-btn{
   visibility: hidden;
 }
 
 .offered-answers > app-text-input{
   margin: 0 20px;
+}
+
+.answer-image{
+  display: block;
+  position: relative;
+  margin-left: 40px;
+  margin-top: 20px;
+  max-height: 120px;
+  height: 120px;
+  max-width: 120px;
+}
+
+.answer-image .action-btn{
+  position: absolute;
+  background: #e7e9ee;
+  visibility: hidden;
+  right: 0;
+  top: 0;
+  transform: translate(12px, -12px);
+  z-index: 1;
+}
+
+.answer-image .action-btn:hover{
+  background: #d0d4da;
+}
+
+.answer-image .action-btn:active{
+  background: #e9d2fd;
+}
+
+
+.answer-image:hover .action-btn{
+  visibility: visible;
+}
+
+.answer-image img{
+  object-fit: cover;
+  max-width: 100%;
+}
+
+.answer-image > img{
+  height: 100%;
+}
+
+.custom-placeholder{
+  height: 44px;
+  width: 100%;
+  background: white;
+  margin-right: 20px;
+}
+
+.cdk-drag-preview{
+  opacity: 0.8;
 }

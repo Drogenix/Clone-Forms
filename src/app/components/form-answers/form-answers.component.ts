@@ -18,6 +18,7 @@ import {
   CdkDrag,
   CdkDragDrop,
   CdkDragHandle,
+  CdkDragPlaceholder,
   CdkDropList,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
@@ -38,6 +39,7 @@ const ANSWERS_MAX = 29;
     CdkDropList,
     CdkDrag,
     CdkDragHandle,
+    CdkDragPlaceholder,
   ],
   providers: [
     {
@@ -159,6 +161,30 @@ export class FormAnswersComponent implements ControlValueAccessor {
 
   updateAnswer(newValue: string, index: number) {
     this.questionAnswers.offeredAnswers[index].value = newValue;
+
+    this._onChange(this.questionAnswers);
+  }
+
+  addImage(index: number) {
+    if (index === -1 && this.questionAnswers.anotherAnswer) {
+      this.questionAnswers.anotherAnswer.image =
+        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg/1920px-Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg';
+      return;
+    }
+
+    this.questionAnswers.offeredAnswers[index].image =
+      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg/1920px-Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg';
+
+    this._onChange(this.questionAnswers);
+  }
+
+  removeImage(index: number) {
+    if (index === -1 && this.questionAnswers.anotherAnswer) {
+      this.questionAnswers.anotherAnswer.image = undefined;
+      return;
+    }
+
+    this.questionAnswers.offeredAnswers[index].image = undefined;
 
     this._onChange(this.questionAnswers);
   }

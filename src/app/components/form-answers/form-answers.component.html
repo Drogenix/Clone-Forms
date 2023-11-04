@@ -1,12 +1,44 @@
 <div [ngSwitch]="questionType.name">
-  <div *ngSwitchCase="'TextShort'" class="offered-answers">
-    <app-text-input placeholder="Краткий ответ"
-                    [disabled]="true"></app-text-input>
+  <div *ngSwitchCase="'TextShort'" class="answer">
+    <div class="answer-edit">
+      <app-text-input placeholder="Краткий ответ"
+                      [disabled]="true"></app-text-input>
+
+      <div *ngIf="!questionAnswers.offeredAnswers[0].image">
+        <button class="action-btn" (click)="addImage(0)">
+          <img alt="Удалить вопрос" height="24" width="24" src="assets/icon/add-image.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="answer-image" *ngIf="questionAnswers.offeredAnswers[0].image">
+      <button class="action-btn" (click)="removeImage(0)">
+        <img alt="Удалить изображение" height="14" width="14" src="assets/icon/close.png">
+      </button>
+      <img [src]="questionAnswers.offeredAnswers[0].image" alt="Изображение к вопросу">
+    </div>
   </div>
-  <div *ngSwitchCase="'TextLarge'" class="offered-answers">
-    <app-text-input placeholder="Развёрнутый ответ"
-                    [disabled]="true"></app-text-input>
+
+  <div *ngSwitchCase="'TextLarge'" class="answer">
+    <div class="answer-edit">
+      <app-text-input placeholder="Развёрнутый ответ"
+                      [disabled]="true"></app-text-input>
+
+      <div *ngIf="!questionAnswers.offeredAnswers[0].image">
+        <button class="action-btn" (click)="addImage(0)">
+          <img alt="Удалить вопрос" height="24" width="24" src="assets/icon/add-image.png">
+        </button>
+      </div>
+    </div>
+
+    <div class="answer-image" *ngIf="questionAnswers.offeredAnswers[0].image">
+      <button class="action-btn" (click)="removeImage(0)">
+        <img alt="Удалить изображение" height="14" width="14" src="assets/icon/close.png">
+      </button>
+      <img [src]="questionAnswers.offeredAnswers[0].image" alt="Изображение к вопросу">
+    </div>
   </div>
+
   <div class="answers"
        cdkDropList
        (cdkDropListDropped)="onDrop($event)"
@@ -16,36 +48,68 @@
            cdkDrag
            cdkDragLockAxis="y"
            cdkDragBoundary=".offered-answers"
+           [cdkDragPreviewContainer]="'parent'"
            *ngFor="let answer of questionAnswers.offeredAnswers; let i = index">
-        <div cdkDragHandle>
-          <img src="assets/icon/drag.png">
+        <div class="custom-placeholder" *cdkDragPlaceholder></div>
+        <div class="answer-edit">
+
+          <div cdkDragHandle>
+            <img src="assets/icon/drag.png">
+          </div>
+
+          <div>
+            <input type="radio" disabled>
+          </div>
+          <app-text-input placeholder="Вариант"
+                          [value]="answer.value"
+                          (onChange)="updateAnswer($event, i)"></app-text-input>
+
+
+          <div *ngIf="!answer.image">
+            <button class="action-btn" (click)="addImage(i)">
+              <img alt="Удалить вопрос" height="24" width="24" src="assets/icon/add-image.png">
+            </button>
+          </div>
+          <div *ngIf="questionAnswers.offeredAnswers.length > 1">
+            <button class="action-btn" (click)="removeAnswer(i)">
+              <img alt="Удалить вопрос" height="14" width="14" src="assets/icon/close.png">
+            </button>
+          </div>
         </div>
+
+        <div class="answer-image" *ngIf="answer.image">
+          <button class="action-btn" (click)="removeImage(i)">
+            <img alt="Удалить изображение" height="14" width="14" src="assets/icon/close.png">
+          </button>
+          <img [src]="answer.image" alt="Изображение к вопросу">
+        </div>
+      </div>
+    </div>
+
+    <div class="answer another-answer" *ngIf="questionAnswers.anotherAnswer">
+      <div class="answer-edit">
         <div>
           <input type="radio" disabled>
         </div>
-        <app-text-input placeholder="Вариант"
-                        [value]="answer.value"
-                        (onChange)="updateAnswer($event, i)"></app-text-input>
-        <div *ngIf="questionAnswers.offeredAnswers.length > 1">
-          <button class="action-btn" (click)="removeAnswer(i)">
+        <app-text-input placeholder="Другое"
+                        [disabled]="true">
+
+        </app-text-input>
+
+        <div *ngIf="!questionAnswers.anotherAnswer.image">
+          <button class="action-btn" (click)="addImage(-1)">
+            <img alt="Удалить вопрос" height="24" width="24" src="assets/icon/add-image.png">
+          </button>
+        </div>
+        <div>
+          <button class="action-btn" (click)="removeAnswer(-1)">
             <img alt="Удалить вопрос" height="14" width="14" src="assets/icon/close.png">
           </button>
         </div>
       </div>
     </div>
-    <div class="answer another-answer" *ngIf="questionAnswers.anotherAnswer">
-      <div>
-        <input type="radio" disabled>
-      </div>
-      <app-text-input placeholder="Другое"
-                      [disabled]="true"></app-text-input>
-      <div>
-        <button class="action-btn" (click)="removeAnswer(-1)">
-          <img alt="Удалить вопрос" height="14" width="14" src="assets/icon/close.png">
-        </button>
-      </div>
-    </div>
   </div>
+
   <div class="answers"
        cdkDropList
        (cdkDropListDropped)="onDrop($event)"
@@ -56,35 +120,72 @@
            cdkDragLockAxis="y"
            cdkDragBoundary=".offered-answers"
            *ngFor="let answer of questionAnswers.offeredAnswers; let i = index">
-        <div cdkDragHandle>
-          <img src="assets/icon/drag.png">
+        <div class="custom-placeholder" *cdkDragPlaceholder></div>
+        <div class="answer-edit">
+          <div cdkDragHandle>
+            <img src="assets/icon/drag.png">
+          </div>
+
+          <div>
+            <input type="checkbox" disabled>
+          </div>
+          <app-text-input  placeholder="Вариант"
+                           [value]="answer.value"
+                           (onChange)="updateAnswer($event, i)">
+          </app-text-input>
+
+
+          <div *ngIf="!answer.image">
+            <button class="action-btn" (click)="addImage(i)">
+              <img alt="Удалить вопрос" height="24" width="24" src="assets/icon/add-image.png">
+            </button>
+          </div>
+          <div *ngIf="questionAnswers.offeredAnswers.length > 1">
+            <button class="action-btn" (click)="removeAnswer(i)">
+              <img alt="Удалить вопрос" height="14" width="14" src="assets/icon/close.png">
+            </button>
+          </div>
         </div>
+
+        <div class="answer-image" *ngIf="answer.image">
+          <button class="action-btn" (click)="removeImage(i)">
+            <img alt="Удалить изображение" height="14" width="14" src="assets/icon/close.png">
+          </button>
+          <img [src]="answer.image" alt="Изображение к вопросу">
+        </div>
+      </div>
+    </div>
+
+    <div class="answer another-answer" *ngIf="questionAnswers.anotherAnswer">
+      <div class="answer-edit">
         <div>
           <input type="checkbox" disabled>
         </div>
-        <app-text-input  placeholder="Вариант"
-                         [value]="answer.value"
-                         (onChange)="updateAnswer($event, i)"></app-text-input>
-        <div *ngIf="questionAnswers.offeredAnswers.length > 1">
-          <button class="action-btn" (click)="removeAnswer(i)">
+        <app-text-input placeholder="Другое"
+                        [disabled]="true">
+        </app-text-input>
+
+        <div *ngIf="!questionAnswers.anotherAnswer.image">
+          <button class="action-btn" (click)="addImage(-1)">
+            <img alt="Удалить вопрос" height="24" width="24" src="assets/icon/add-image.png">
+          </button>
+        </div>
+        <div>
+          <button class="action-btn" (click)="removeAnswer(-1)">
             <img alt="Удалить вопрос" height="14" width="14" src="assets/icon/close.png">
           </button>
         </div>
       </div>
-    </div>
-    <div class="answer another-answer" *ngIf="questionAnswers.anotherAnswer">
-      <div>
-        <input type="checkbox" disabled>
-      </div>
-      <app-text-input placeholder="Другое"
-                      [disabled]="true"></app-text-input>
-      <div>
-        <button class="action-btn" (click)="removeAnswer(-1)">
-          <img alt="Удалить вопрос" height="14" width="14" src="assets/icon/close.png">
+
+      <div class="answer-image" *ngIf="questionAnswers.anotherAnswer.image">
+        <button class="action-btn" (click)="removeImage(-1)">
+          <img alt="Удалить изображение" height="14" width="14" src="assets/icon/close.png">
         </button>
+        <img [src]="questionAnswers.anotherAnswer.image" alt="Изображение к вопросу">
       </div>
     </div>
   </div>
+
   <div class="add-answer-option" *ngIf="questionType.name === 'MultipleChoice' || questionType.name === 'OneChoice'">
     <div *ngIf="questionType.name === 'MultipleChoice'">
       <input type="checkbox" disabled>

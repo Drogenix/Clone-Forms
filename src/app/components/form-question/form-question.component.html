@@ -7,7 +7,7 @@
                             placeholder="Вопрос"></app-text-rich-editor>
       <span *ngIf="questionForm.controls.required.value === true" class="required-mark">*</span>
     </div>
-    <app-question-type-select formControlName="QuestionType"></app-question-type-select>
+    <app-question-type-select formControlName="questionType"></app-question-type-select>
   </div>
   <app-form-answers formControlName="answers"
                     [questionType]="questionForm.controls.questionType.value"></app-form-answers>

@@ -17,10 +17,6 @@ form > .form-block:first-child{
   border-radius: 10px 10px 6px 6px;
 }
 
-fieldset{
-  border: none;
-}
-
 .form-block:has(.ng-touched.question-required){
   border-color: rgb(217,48,37);
 }
@@ -79,15 +75,15 @@ form{
 }
 
 @media (width < 716px) {
-  .container{
+  :host:not(.screenshot-container) .container{
     padding: 0 4px;
   }
 
-  .form-block{
+  :host:not(.screenshot-container) .form-block{
     margin-bottom: 4px;
   }
 
-  form{
+  :host:not(.screenshot-container) form{
     margin-top: 4px;
   }
 }
