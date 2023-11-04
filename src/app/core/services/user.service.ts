@@ -5,7 +5,6 @@ import { AuthUser } from '../entity/auth-user';
 import {
   BehaviorSubject,
   catchError,
-  delay,
   EMPTY,
   map,
   Observable,

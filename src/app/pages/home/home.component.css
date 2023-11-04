@@ -132,13 +132,13 @@ article{
 .user-forms-grid{
   display: grid;
   gap: 20px;
-  grid-template-columns: repeat(auto-fill, minmax(min(41vw + 12px,208px),1fr));
+  grid-template-columns: repeat(auto-fill, minmax(min(39vw + 12px,208px),1fr));
   padding-bottom: 42px;
 }
 
 .user-forms-grid article{
   cursor: pointer;
-  min-height: 258px;
+  min-height: 232px;
 }
 
 @media screen and (max-width: 716px){
@@ -148,15 +148,12 @@ article{
 }
 
 .form-item-img-wrapper{
-  min-height: 169px;
-  max-height: 169px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 148px;
   width: 100%;
-  overflow: hidden;
-}
-
-.form-item-img-wrapper img{
-  scale: 1.7;
-  transform: translateY(20%);
+  background: #f0ebf8;
 }
 
 .form-item-footer{
