@@ -153,7 +153,7 @@ export class FormsService {
   saveFormState(form: Form) {
     this._formStateSub.next(form);
   }
-  updateForm(form: Form, formViewScreenshot?: string): Observable<Object> {
+  updateForm(form: Form): Observable<Object> {
     this._updatingDataSub.next(true);
 
     return this.http.put(`${API_BASE_URL}/forms/${form.id}`, form).pipe(
@@ -165,8 +165,6 @@ export class FormsService {
       switchMap((formDetailsResponse: FormDetails[]) => {
         const formDetails = formDetailsResponse[0];
         formDetails.lastUpdate = new Date();
-
-        if (formViewScreenshot) formDetails.previewImg = formViewScreenshot;
 
         return this.http.put(
           `${API_BASE_URL}/forms-details/` + formDetails.id,

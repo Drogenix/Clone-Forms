@@ -4,6 +4,7 @@ import {
   Component,
   ElementRef,
   Injector,
+  NgZone,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -30,27 +31,15 @@ import { CdkScrollable } from '@angular/cdk/overlay';
 import { TuiAlertService } from '@taiga-ui/core';
 import { TuiDestroyService } from '@taiga-ui/cdk';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
-import {
-  from,
-  Observable,
-  of,
-  Subject,
-  switchMap,
-  takeUntil,
-  tap,
-  timer,
-} from 'rxjs';
+import { Observable, switchMap, takeUntil, tap } from 'rxjs';
 import { AlertComponent } from '../../components/alert/alert.component';
 import { Form } from '../../core/entity/form';
 import { ActivatedRoute } from '@angular/router';
 import { FormsService } from '../../core/services/forms.service';
 import { TextRichEditorComponent } from '../../components/text-rich-editor/text-rich-editor.component';
 import { PageSpinnerComponent } from '../../components/page-spinner/page-spinner.component';
-import { AppError } from '../../core/entity/app-error';
 import { ErrorComponent } from '../../components/error/error.component';
-import { FormViewComponent } from '../form-view/form-view.component';
-import html2canvas from 'html2canvas';
-import { FormUserResponse } from '../../core/entity/form-user-response';
+
 const QUESTIONS_MAX = 100;
 
 @Component({
@@ -101,6 +90,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     private viewRef: ViewContainerRef,
     private formService: FormsService,
+    private zone: NgZone,
     private readonly injector: Injector,
   ) {}
 
@@ -115,9 +105,11 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
           for (const question of form.questions) {
             this.addQuestion(false);
           }
+
           this.form.controls.questions.patchValue(form.questions, {
             emitEvent: false,
           });
+
           this.form.patchValue(
             {
               id: form.id,
@@ -134,17 +126,12 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
     this.form.valueChanges
       .pipe(
-        switchMap((form) =>
-          this._getFormViewScreenshot(form as Form).pipe(
-            switchMap((screenshot) =>
-              this.formService.updateForm(form as Form, screenshot),
-            ),
-          ),
-        ),
+        switchMap((value) => this.formService.updateForm(value as Form)),
         takeUntil(this.destroy$),
       )
       .subscribe();
   }
+
   ngOnDestroy(): void {
     this.formService.saveFormState(this.form.value as Form);
   }
@@ -285,36 +272,39 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
     if (draggedRect.top - 2 <= elementToSortTop) return true;
 
-    if (
+    return (
       draggedRect.top > elementToSortTop &&
       draggedRect.bottom + transformValue <= elementToSortRect.bottom
-    ) {
-      return true;
-    }
-
-    return false;
-  }
-
-  private _getFormViewScreenshot(form: Form): Observable<string> {
-    const viewFormRef = this.viewRef.createComponent(FormViewComponent);
-    viewFormRef.location.nativeElement.classList.add('invisible');
-    viewFormRef.setInput('viewForm', form);
-
-    return timer(50).pipe(
-      switchMap(() => {
-        const image = html2canvas(viewFormRef.location.nativeElement, {
-          scale: 2,
-          windowWidth: 960,
-        }).then((canvas) => {
-          const base64Image = canvas.toDataURL('image/png');
-
-          viewFormRef.destroy();
-
-          return base64Image;
-        });
-
-        return from(image);
-      }),
     );
   }
+
+  /*
+  private _getFormViewScreenshot(form: Form) {
+    const viewFormRef = this.viewRef.createComponent(FormViewComponent);
+    viewFormRef.location.nativeElement.classList.add('screenshot-container');
+
+    viewFormRef.setInput('viewForm', form);
+
+    html2canvas(viewFormRef.location.nativeElement, {
+      scale: 2,
+      allowTaint: true,
+      useCORS: true,
+    }).then((canvas) => {
+      const base64Image = canvas.toDataURL('image/png');
+
+      viewFormRef.destroy();
+
+      console.log('screenshot done');
+    });
+
+    // if (typeof Worker !== 'undefined') {
+    //   debugger;
+    //   const worker = new Worker('src/app/core/form-view-screenshot.worker.ts');
+    //
+    //   worker.postMessage({
+    //     myFunction: JSONfn.stringify( (arg) => ... ),
+    //     payload: ... // any kind of data, let the function decide whether it's useful
+    // });
+  }
+*/
 }

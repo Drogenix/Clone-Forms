@@ -279,8 +279,9 @@ input[type='checkbox']:hover:not(:checked):after{
   background-color: rgb(195 168 168 / 14%);
 }
 
-.invisible{
+.screenshot-container{
   position: fixed;
   inset:0;
+  min-width: 1920px;
   z-index: -999;
 }
