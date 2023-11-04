@@ -162,18 +162,19 @@ export class HomeComponent implements OnInit {
         switchMap((value) => {
           if (typeof value === 'string' && value != formDetails.name) {
             formDetails.name = value;
-            return this.formsService.updateFormDetails(formDetails);
+            return this.formsService.updateFormDetails(formDetails).pipe(
+              switchMap(() => {
+                this.cdr.markForCheck();
+                return this.alertService.open('Форма переименована', {
+                  autoClose: 3000,
+                  hasCloseButton: false,
+                  status: 'info',
+                });
+              }),
+            );
           }
 
           return of(value);
-        }),
-        switchMap(() => {
-          this.cdr.markForCheck();
-          return this.alertService.open('Форма переименована', {
-            autoClose: 3000,
-            hasCloseButton: false,
-            status: 'info',
-          });
         }),
         takeUntil(this.destroy$),
       )
@@ -198,19 +199,20 @@ export class HomeComponent implements OnInit {
             formDetail.inTrash = true;
             formDetail.deleted = new Date();
 
-            return this.formsService.updateFormDetails(formDetail);
+            return this.formsService.updateFormDetails(formDetail).pipe(
+              switchMap(() => {
+                formsDetails.splice(selected, 1);
+                this.cdr.markForCheck();
+                return this.alertService.open('Форма перемещена в корзину', {
+                  autoClose: 3000,
+                  hasCloseButton: false,
+                  status: 'info',
+                });
+              }),
+            );
           }
 
           return of(deleteForm);
-        }),
-        switchMap(() => {
-          formsDetails.splice(selected, 1);
-          this.cdr.markForCheck();
-          return this.alertService.open('Форма перемещена в корзину', {
-            autoClose: 3000,
-            hasCloseButton: false,
-            status: 'info',
-          });
         }),
         takeUntil(this.destroy$),
       )
