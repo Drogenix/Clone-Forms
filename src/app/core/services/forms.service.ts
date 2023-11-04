@@ -120,7 +120,7 @@ export class FormsService {
   }
   findByName(name: string): Observable<FormDetails[]> {
     return this.http.get<FormDetails[]>(
-      `${API_BASE_URL}/forms-details?name_like=${name}&inTrash=false`,
+      `${API_BASE_URL}/forms-details?inTrash=false&name_like=${name}&userId=${this.userService.user?.id}`,
     );
   }
   getById(formId: string): Observable<Form> {
