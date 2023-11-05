@@ -14,17 +14,20 @@ import { TuiActiveZoneModule, TuiDestroyService } from '@taiga-ui/cdk';
 import { FormDetails } from '../../core/entity/form-details';
 import {
   BehaviorSubject,
+  catchError,
   debounceTime,
   distinctUntilChanged,
+  map,
   of,
+  startWith,
+  Subject,
   switchMap,
   takeUntil,
-  tap,
+  throwError,
 } from 'rxjs';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
 import { AlertComponent } from '../../components/alert/alert.component';
-import { AppError } from '../../core/entity/app-error';
 
 interface SortOption {
   name: string;
@@ -68,43 +71,51 @@ export class TrashComponent implements OnInit {
   searchInput = new FormControl('', { nonNullable: true });
   private _notFoundSub = new BehaviorSubject<boolean>(false);
   notFound$ = this._notFoundSub.asObservable();
-  forms$ = this.formService.getUserTrash();
+  private _formsSub = new BehaviorSubject<null>(null);
+  forms$ = this._formsSub.asObservable().pipe(
+    switchMap(() =>
+      this.formService
+        .getUserTrash(
+          this.sortOptions[this.selectedSortOption].order,
+          this.sortOptions[this.selectedSortOption].sortBy,
+          this.searchInput.value,
+        )
+        .pipe(
+          startWith(null),
+          catchError((error) => {
+            if (error.status === 404 && this.searchInput.value) {
+              this._notFoundSub.next(true);
+            }
+
+            return of([] as FormDetails[]);
+          }),
+        ),
+    ),
+  );
+
   constructor(
     private alertService: TuiAlertService,
     private formService: FormsService,
     private cdr: ChangeDetectorRef,
     private destroy$: TuiDestroyService,
   ) {}
+
   ngOnInit(): void {
     this.searchInput.valueChanges
       .pipe(debounceTime(400), distinctUntilChanged())
-      .subscribe((value) => {
+      .subscribe(() => {
         this._notFoundSub.next(false);
-        this.forms$ = this.formService
-          .getUserTrash(
-            this.sortOptions[this.selectedSortOption].order,
-            this.sortOptions[this.selectedSortOption].sortBy,
-            value,
-          )
-          .pipe(
-            tap({
-              error: (err: AppError) => {
-                if (err.status === 404) this._notFoundSub.next(true);
-              },
-            }),
-          );
-        this.cdr.markForCheck();
+
+        this._formsSub.next(null);
       });
   }
+
   changeSortOption(index: number) {
     if (this.selectedSortOption != index) {
       this.selectedSortOption = index;
       this.openSortOptions = false;
 
-      this.forms$ = this.formService.getUserTrash(
-        this.sortOptions[index].order,
-        this.sortOptions[index].sortBy,
-      );
+      this._formsSub.next(null);
 
       this.cdr.markForCheck();
     }

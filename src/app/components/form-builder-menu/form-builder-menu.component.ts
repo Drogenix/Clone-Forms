@@ -13,10 +13,12 @@ import {
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { debounceTime, finalize, fromEvent, Subject, takeUntil } from 'rxjs';
-import { TuiHintModule } from '@taiga-ui/core';
+import { TuiAlertService, TuiHintModule } from '@taiga-ui/core';
+import { TuiDestroyService } from '@taiga-ui/cdk';
 
 @Component({
   selector: 'app-form-builder-menu',
+  providers: [TuiDestroyService],
   standalone: true,
   imports: [CommonModule, TuiHintModule],
   templateUrl: './form-builder-menu.component.html',
@@ -34,9 +36,12 @@ export class FormBuilderMenuComponent
   private _stopMoveMenu$ = new Subject();
   private _isMovingEnable = false;
   tooltipDirection: 'left' | 'top';
+
   constructor(
     private _elRef: ElementRef,
     private cdr: ChangeDetectorRef,
+    private alertService: TuiAlertService,
+    private destroy$: TuiDestroyService,
   ) {}
 
   ngOnInit(): void {
@@ -141,6 +146,18 @@ export class FormBuilderMenuComponent
 
     return parentBottom - 32 <= elementBottom;
   }
+
+  notifyFeatureInDev() {
+    this.alertService
+      .open('Эта функция в разработке', {
+        autoClose: 3000,
+        hasCloseButton: false,
+        status: 'info',
+      })
+      .pipe(takeUntil(this.destroy$))
+      .subscribe();
+  }
+
   onAddQuestionClick() {
     this.onAddQuestion.emit();
   }

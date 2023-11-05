@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   BehaviorSubject,
+  catchError,
   delay,
   map,
   Observable,
@@ -45,36 +46,29 @@ export class FormsService {
     private uuidGenerator: UuidGenerator,
   ) {}
 
-  private _isEmptyResponse(response: Array<any>) {
-    return response.length === 0;
-  }
-
   getUserTrash(
     order: 'asc' | 'desc' = 'asc',
     sortBy: 'deleted' | 'name' = 'name',
     nameLike?: string,
   ): Observable<FormDetails[]> {
-    return this.http
-      .get<FormDetails[]>(
-        `${API_BASE_URL}/form-details?inTrash=true&sortBy=${sortBy}&order=${order}&name=${
-          nameLike ? nameLike : ''
-        }&userId=` + this.userService.user?.id,
-      )
-      .pipe(
-        switchMap((response) => {
-          if (response.length === 0 && nameLike) {
-            const error: AppError = {
-              status: 404,
-              message: 'Ничего не найдено',
-            };
+    let url = `${API_BASE_URL}/form-details?userId=${this.userService.user?.id}&sortBy=${sortBy}&order=${order}`;
+    if (nameLike) url = url.replace('?', `?name=${nameLike}&`);
 
-            return throwError(() => error);
-          }
+    return this.http.get<FormDetails[]>(url).pipe(
+      map((response) => response.filter((item) => item.inTrash === true)),
+      switchMap((response) => {
+        if (response.length === 0 && nameLike) {
+          const error: AppError = {
+            status: 404,
+            message: 'Ничего не найдено',
+          };
 
-          return of(response);
-        }),
-        delay(300),
-      );
+          return throwError(() => error);
+        }
+
+        return of(response);
+      }),
+    );
   }
 
   getFormDetails(formId: string): Observable<FormDetails> {
@@ -86,46 +80,54 @@ export class FormsService {
         switchMap((formResponses) => {
           return this.http
             .get<FormDetails[]>(
-              `${API_BASE_URL}/forms-details?formId=${formId}&userId=${this.userService.user?.id}`,
+              `${API_BASE_URL}/form-details?userId=${this.userService.user?.id}`,
             )
             .pipe(
               switchMap((response) => {
-                if (this._isEmptyResponse(response))
+                const filtered = response.filter(
+                  (item) => item.formId === formId,
+                );
+
+                if (filtered.length === 0)
                   return throwError(() => FORM_NOT_FOUND_ERROR);
 
-                return of(response);
+                return of(filtered);
               }),
               map((response) => {
-                if (!this._isEmptyResponse(formResponses)) {
-                  const formDetails = response[0];
-                  formDetails.totalResponses = formResponses.length;
+                const formDetails = response[0];
 
-                  return formDetails;
-                }
-
-                return response[0];
+                formDetails.totalResponses = formResponses.length;
+                return formDetails;
               }),
             );
         }),
       );
   }
+
   getUserForms(
     order: 'asc' | 'desc' = 'asc',
     sortBy: 'lastUpdate' | 'name' = 'name',
   ): Observable<FormDetails[]> {
     return this.http
       .get<FormDetails[]>(
-        `${API_BASE_URL}/form-details?userId=${
-          this.userService.user!.id
-        }&inTrash=false&sortBy=${sortBy}&order=${order}`,
+        `${API_BASE_URL}/form-details?userId=${this.userService.user?.id}&sortBy=${sortBy}&order=${order}`,
       )
-      .pipe(delay(300));
+      .pipe(
+        map((response) => response.filter((item) => item.inTrash === false)),
+      );
   }
+
   findByName(name: string): Observable<FormDetails[]> {
-    return this.http.get<FormDetails[]>(
-      `${API_BASE_URL}/form-details?inTrash=false&name=${name}&userId=${this.userService.user?.id}`,
-    );
+    return this.http
+      .get<FormDetails[]>(
+        `${API_BASE_URL}/form-details?userId=${this.userService.user?.id}`,
+      )
+      .pipe(
+        map((response) => response.filter((item) => item.name.includes(name))),
+        map((response) => response.filter((item) => item.inTrash === false)),
+      );
   }
+
   getById(formId: string): Observable<Form> {
     return this._formStateSub
       .asObservable()
@@ -133,7 +135,15 @@ export class FormsService {
         switchMap((form) =>
           form && form.id === formId
             ? of(form)
-            : this.http.get<Form>(`${API_BASE_URL}/forms/${formId}`),
+            : this.http
+                .get<Form[]>(`${API_BASE_URL}/forms?id=${formId}`)
+                .pipe(
+                  switchMap((response) =>
+                    response[0]
+                      ? of(response[0])
+                      : throwError(() => FORM_NOT_FOUND_ERROR),
+                  ),
+                ),
         ),
       );
   }
@@ -153,13 +163,15 @@ export class FormsService {
         }),
       );
   }
+
   saveFormState(form: Form) {
     this._formStateSub.next(form);
   }
+
   updateForm(form: Form): Observable<Object> {
     this._updatingDataSub.next(true);
 
-    return this.http.put(`${API_BASE_URL}/forms/${form.id}`, form).pipe(
+    return this.http.put(`${API_BASE_URL}/forms/${form.uid}`, form).pipe(
       switchMap(() =>
         this.http.get<FormDetails[]>(
           `${API_BASE_URL}/form-details?formId=${form.id}`,
@@ -170,7 +182,7 @@ export class FormsService {
         formDetails.lastUpdate = new Date();
 
         return this.http.put(
-          `${API_BASE_URL}/form-details/` + formDetails.id,
+          `${API_BASE_URL}/form-details/` + formDetails.uid,
           formDetails,
         );
       }),
@@ -183,7 +195,7 @@ export class FormsService {
     this._updatingDataSub.next(true);
 
     return this.http
-      .put(`${API_BASE_URL}/form-details/${formDetails.id}`, formDetails)
+      .put(`${API_BASE_URL}/form-details/${formDetails.uid}`, formDetails)
       .pipe(tap(() => this._updatingDataSub.next(false)));
   }
 

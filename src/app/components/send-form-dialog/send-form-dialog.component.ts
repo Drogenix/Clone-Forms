@@ -19,7 +19,7 @@ import { TuiDestroyService } from '@taiga-ui/cdk';
 })
 export class SendFormDialogComponent implements OnInit {
   copied = false;
-  formLink = 'http://localhost:4200/';
+  formLink = 'https://clone-forms.netlify.app/';
   constructor(
     private destroy$: TuiDestroyService,
     @Inject(POLYMORPHEUS_CONTEXT)

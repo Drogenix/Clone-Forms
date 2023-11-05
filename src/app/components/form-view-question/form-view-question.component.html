@@ -8,14 +8,14 @@
         <div class="answer-content">
           <app-text-input placeholder="Краткий ответ"
                           *ngSwitchCase="'TextShort'"
-                          [value]="questionResponse.answers[0].value || ''"
+                          [value]="questionResponse.answers[0]?.value || ''"
                           [disabled]="disabled"
                           (onChange)="textAnswerChanged(answer, $event)">
           </app-text-input>
 
           <app-text-rich-editor placeholder="Развёрнутый ответ"
                                 *ngSwitchCase="'TextLarge'"
-                                [value]="questionResponse.answers[0].value || ''"
+                                [value]="questionResponse.answers[0]?.value || ''"
                                 [disabled]="disabled"
                                 (onChange)="textAnswerChanged(answer, $event)">
           </app-text-rich-editor>

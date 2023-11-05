@@ -16,7 +16,6 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
       };
 
       if (err.status === 404) {
-        debugger;
         error.status = 404;
         error.message = 'Обьект не найден';
 

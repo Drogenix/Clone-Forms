@@ -154,7 +154,7 @@ export class HomeComponent implements OnInit {
         {
           size: 's',
           closeable: false,
-          dismissible: false,
+          dismissible: true,
           data: formDetails.name,
         },
       )
@@ -218,6 +218,7 @@ export class HomeComponent implements OnInit {
       )
       .subscribe();
   }
+
   changeSortOption(index: number) {
     if (this.selectedSortOption != index) {
       this.selectedSortOption = index;
@@ -231,6 +232,7 @@ export class HomeComponent implements OnInit {
       this.cdr.markForCheck();
     }
   }
+
   createNewForm() {
     this._showLoadSub.next(true);
     this.formsService

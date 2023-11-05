@@ -11,127 +11,121 @@
 </app-header>
 
 <main>
-    <section>
-      <div class="container">
-        <div class="trash-info">
-          <p class="trash-info-header">
-            Памятка
+  <section>
+    <div class="container">
+      <div class="trash-info">
+        <p class="trash-info-header">Памятка</p>
+        <div class="trash-info-content">
+          <p>
+            Объекты помещённые в корзину автоматически удаляются навсегда из
+            неё через 30 дней после попадания.
           </p>
-          <div class="trash-info-content">
-            <p>
-              Объект помещённые в корзину автоматически безвозвратно удаляются из неё через 30 дней после добавления.
-            </p>
-            <p>
-              Чтобы убрать объект из корзины, откройте меню объекта (кнопка с иконкой трёх точек) и нажмите на кнопку "Восстановить".
-            </p>
-          </div>
+          <p>
+            Чтобы убрать объект из корзины, откройте меню объекта (кнопка с
+            иконкой трёх точек) и нажмите на кнопку "Восстановить".
+          </p>
         </div>
+      </div>
 
-        <div class="user-forms-header">
-            <h2>Моя корзина</h2>
-            <div class="header-menu">
-              <button
-                class="user-forms-btn"
-                [tuiDropdown]="sort"
-                [tuiDropdownManual]="openSortOptions"
-                [tuiDropdownAlign]="'center'"
-                (tuiActiveZoneChange)="openSortOptions = $event"
-              >
-                <img height="22" width="22" src="assets/img/sort.png" />
-              </button>
-              <ng-template #sort>
-                <div class="dropdown-menu">
-                  <button
-                    class="menu-item"
-                    *ngFor="let option of sortOptions; let i = index"
-                    (click)="changeSortOption(i)"
-                  >
-                    <div class="dropdown-menu-item-selected">
-                      <img
-                        *ngIf="selectedSortOption === i"
-                        class="icon-sm"
-                        src="assets/icon/check.svg"
-                      />
-                    </div>
-                    <p>{{ option.name }}</p>
-                  </button>
-                </div>
-              </ng-template>
-            </div>
-          </div>
-
-        <ng-container *ngIf="forms$ | async as forms; else notFoundOrLoading">
-          <div
-            class="user-forms-grid"
-            *ngIf="forms.length > 0; else emptyTrash"
-          >
-            <article
-              class="card-border"
-              *ngFor="let form of forms; let i = index"
+      <div class="user-forms-header">
+        <h2>Моя корзина</h2>
+        <ng-container *ngIf="forms$ | async as forms">
+          <div class="header-menu" *ngIf="forms.length > 0">
+            <button
+              class="user-forms-btn"
+              [tuiDropdown]="sort"
+              [tuiDropdownManual]="openSortOptions"
+              [tuiDropdownAlign]="'center'"
+              (tuiActiveZoneChange)="openSortOptions = $event"
             >
-              <div class="form-item-img-wrapper">
-                <img src="assets/img/forms-brend.png"
-                     height="48"
-                     width="48"
-                     alt="Форма"/>
+              <img height="22" width="22" src="assets/img/sort.png" />
+            </button>
+            <ng-template #sort>
+              <div class="dropdown-menu">
+                <button
+                  class="menu-item"
+                  *ngFor="let option of sortOptions; let i = index"
+                  (click)="changeSortOption(i)"
+                >
+                  <div class="dropdown-menu-item-selected">
+                    <img
+                      *ngIf="selectedSortOption === i"
+                      class="icon-sm"
+                      src="assets/icon/check.svg"
+                    />
+                  </div>
+                  <p>{{ option.name }}</p>
+                </button>
               </div>
-              <div class="form-item-footer">
-                <p class="form-name hide-overflow">
-                  {{ form.name }}
-                </p>
-                <div class="form-item-menu">
-                  <p>
-                    Удалено:
-                    <br />
-                    {{ form.deleted! | lastUpdateDate }}
-                  </p>
-                  <button
-                    class="user-forms-btn"
-                    [tuiDropdown]="menuContent"
-                    [tuiDropdownManual]="activeForm === i ? openFormMenu : false"
-                    [tuiDropdownAlign]="'center'"
-                    (tuiActiveZoneChange)="onFormActiveZoneChange($event)"
-                    (click)="openMenu($event, i)"
-                  >
-                    <img src="assets/img/menu.png" alt="Меню формы" />
-                  </button>
-                  <ng-template #menuContent>
-                    <div class="dropdown-menu">
-                      <button class="menu-item" (click)="moveFromTrash(i, forms)">
-                        <img src="assets/icon/recovery.svg" />
-                        <p>Восстановить</p>
-                      </button>
-                    </div>
-                  </ng-template>
-                </div>
-              </div>
-            </article>
+            </ng-template>
           </div>
         </ng-container>
-
-        <ng-template #emptyTrash>
-          <div class="no-forms-info">
-            <img src="assets/img/empty-trash.svg" />
-            <p class="header-3">Корзина пуста</p>
-            <p class="no-forms-message">
-              Объекты в корзине удаляются навсегда через 30 дней после попадания
-              в неё
-            </p>
-          </div>
-        </ng-template>
-
-        <ng-template #notFoundOrLoading>
-          <div *ngIf="notFound$ | async; else loading" class="no-forms-info">
-            <img src="assets/img/empty-trash.svg" />
-            <p class="header-3">Ничего не найдено</p>
-            <p class="no-forms-message">
-              Объекты в корзине удаляются навсегда через 30 дней после попадания
-              в неё
-            </p>
-          </div>
-        </ng-template>
       </div>
-    </section>
+
+      <ng-container *ngIf="forms$ | async as forms; else loading">
+        <div
+          class="user-forms-grid"
+          *ngIf="forms.length > 0; else notFoundOrEmpty"
+        >
+          <article
+            class="card-border"
+            *ngFor="let form of forms; let i = index"
+          >
+            <div class="form-item-img-wrapper">
+              <img
+                src="assets/img/forms-brend.png"
+                height="48"
+                width="48"
+                alt="Форма"
+              />
+            </div>
+            <div class="form-item-footer">
+              <p class="form-name hide-overflow">
+                {{ form.name }}
+              </p>
+              <div class="form-item-menu">
+                <p>
+                  Удалено:
+                  <br />
+                  {{ form.deleted! | lastUpdateDate }}
+                </p>
+                <button
+                  class="user-forms-btn"
+                  [tuiDropdown]="menuContent"
+                  [tuiDropdownManual]="activeForm === i ? openFormMenu : false"
+                  [tuiDropdownAlign]="'center'"
+                  (tuiActiveZoneChange)="onFormActiveZoneChange($event)"
+                  (click)="openMenu($event, i)"
+                >
+                  <img src="assets/img/menu.png" alt="Меню формы" />
+                </button>
+                <ng-template #menuContent>
+                  <div class="dropdown-menu">
+                    <button class="menu-item" (click)="moveFromTrash(i, forms)">
+                      <img src="assets/icon/recovery.svg" />
+                      <p>Восстановить</p>
+                    </button>
+                  </div>
+                </ng-template>
+              </div>
+            </div>
+          </article>
+        </div>
+      </ng-container>
+      <ng-template #notFoundOrEmpty>
+        <div class="no-forms-info">
+          <img alt="Пустая корзина" src="assets/img/empty-trash.svg" />
+          <p class="header-3">
+            {{ (notFound$ | async) ? "Ничего не найдено" : "Корзина пуста" }}
+          </p>
+          <p class="no-forms-message">
+            Объекты в корзине удаляются навсегда через 30 дней после попадания в
+            неё
+          </p>
+        </div>
+      </ng-template>
+    </div>
+  </section>
 </main>
 <ng-template #loading>
   <app-page-spinner></app-page-spinner>

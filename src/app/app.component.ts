@@ -13,10 +13,9 @@ import { HomeComponent } from './pages/home/home.component';
 import { FormBuilderComponent } from './pages/form-builder/form-builder.component';
 import { FormViewComponent } from './pages/form-view/form-view.component';
 import { RouterOutlet } from '@angular/router';
-import { UserService } from './core/services/user.service';
 import { ErrorService } from './core/services/error.service';
 import { ErrorComponent } from './components/error/error.component';
-import { Observable, takeUntil } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AppError } from './core/entity/app-error';
 import { TuiDestroyService } from '@taiga-ui/cdk';
 

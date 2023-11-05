@@ -1,5 +1,6 @@
 export interface FormDetails {
   id: string;
+  uid?: string;
   name: string;
   userId: string;
   formId: string;

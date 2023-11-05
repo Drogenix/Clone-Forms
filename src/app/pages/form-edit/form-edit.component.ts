@@ -28,6 +28,7 @@ import {
 } from 'rxjs';
 import { TuiDestroyService } from '@taiga-ui/cdk';
 import {
+  TuiAlertService,
   TuiDialogService,
   TuiHintModule,
   tuiSlideInBottom,
@@ -65,7 +66,7 @@ export class FormEditComponent implements OnInit {
   });
   formId: string;
   private _showStateSub = new BehaviorSubject<boolean>(false);
-  private _showStateTimeout = NaN;
+  private _showStateTimeout: any = undefined;
 
   private _notFoundSub = new Subject<AppError>();
   notFound$ = this._notFoundSub.asObservable();
@@ -108,6 +109,7 @@ export class FormEditComponent implements OnInit {
     private dialogService: TuiDialogService,
     private injector: Injector,
     private destroy$: TuiDestroyService,
+    private alertService: TuiAlertService,
   ) {}
 
   ngOnInit(): void {
@@ -142,6 +144,17 @@ export class FormEditComponent implements OnInit {
         }),
         takeUntil(this.destroy$),
       )
+      .subscribe();
+  }
+
+  notifyFeatureInDev() {
+    this.alertService
+      .open('Эта функция в разработке', {
+        autoClose: 3000,
+        hasCloseButton: false,
+        status: 'info',
+      })
+      .pipe(takeUntil(this.destroy$))
       .subscribe();
   }
 }

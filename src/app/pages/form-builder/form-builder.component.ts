@@ -71,6 +71,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
   @ViewChild('formCont') formRef: ElementRef;
   readonly DESCRIPTION_BLOCK_INDEX = -1;
   form = this.fb.group({
+    uid: '0',
     id: '0',
     title: 'Новая форма',
     description: '',
@@ -112,6 +113,7 @@ export class FormBuilderComponent implements OnInit, OnDestroy {
 
           this.form.patchValue(
             {
+              uid: form.uid,
               id: form.id,
               title: form.title,
               description: form.description,

@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   forwardRef,
   Input,
@@ -22,6 +23,12 @@ import {
   CdkDropList,
   moveItemInArray,
 } from '@angular/cdk/drag-drop';
+import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';
+import { RenameFormDialogComponent } from '../rename-form-dialog/rename-form-dialog.component';
+import { of, switchMap, takeUntil, tap } from 'rxjs';
+import { TuiDialogService } from '@taiga-ui/core';
+import { InputImageDialogComponent } from '../input-image-dialog/input-image-dialog.component';
+import { TuiDestroyService } from '@taiga-ui/cdk';
 
 interface QuestionAnswers {
   offeredAnswers: Answer[];
@@ -47,6 +54,7 @@ const ANSWERS_MAX = 29;
       useExisting: forwardRef(() => FormAnswersComponent),
       multi: true,
     },
+    TuiDestroyService,
   ],
   templateUrl: './form-answers.component.html',
   styleUrls: ['./form-answers.component.css'],
@@ -81,7 +89,12 @@ export class FormAnswersComponent implements ControlValueAccessor {
   private _onChange: Function;
   private _onTouched: Function;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private dialogService: TuiDialogService,
+    private destroy$: TuiDestroyService,
+    private cdr: ChangeDetectorRef,
+  ) {}
 
   private _createTextAnswer() {
     this.questionAnswers = {
@@ -94,6 +107,7 @@ export class FormAnswersComponent implements ControlValueAccessor {
       ],
     };
   }
+
   private _createListAnswer() {
     this.questionAnswers = {
       anotherAnswer: undefined,
@@ -166,16 +180,29 @@ export class FormAnswersComponent implements ControlValueAccessor {
   }
 
   addImage(index: number) {
-    if (index === -1 && this.questionAnswers.anotherAnswer) {
-      this.questionAnswers.anotherAnswer.image =
-        'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg/1920px-Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg';
-      return;
-    }
+    this.dialogService
+      .open<string>(new PolymorpheusComponent(InputImageDialogComponent), {
+        size: 's',
+        closeable: true,
+        dismissible: false,
+      })
+      .pipe(
+        tap({
+          next: (imageUrl) => {
+            if (index === -1 && this.questionAnswers.anotherAnswer) {
+              this.questionAnswers.anotherAnswer.image = imageUrl;
+            } else {
+              this.questionAnswers.offeredAnswers[index].image = imageUrl;
+            }
 
-    this.questionAnswers.offeredAnswers[index].image =
-      'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg/1920px-Mount_Everest_as_seen_from_Drukair2_PLW_edit.jpg';
+            this.cdr.markForCheck();
 
-    this._onChange(this.questionAnswers);
+            this._onChange(this.questionAnswers);
+          },
+        }),
+        takeUntil(this.destroy$),
+      )
+      .subscribe();
   }
 
   removeImage(index: number) {
