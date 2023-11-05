@@ -123,8 +123,7 @@ export class FormsService {
         `${API_BASE_URL}/form-details?userId=${this.userService.user?.id}`,
       )
       .pipe(
-        map((response) => response.filter((item) => item.name.includes(name))),
-        map((response) => response.filter((item) => item.inTrash === false)),
+        map((response) => response.filter((item) => item.name.includes(name) && item.inTrash === false))
       );
   }
 
