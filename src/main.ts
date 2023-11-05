@@ -22,7 +22,6 @@ import { errorInterceptor } from './app/core/interceptors/error.interceptor';
 import { UserService } from './app/core/services/user.service';
 import { LocalStorageService } from './app/core/services/local-storage.service';
 import { Observable } from 'rxjs';
-import { responseInterceptor } from './app/core/interceptors/data-response.interceptor';
 
 registerLocaleData(localeRu, 'ru');
 
