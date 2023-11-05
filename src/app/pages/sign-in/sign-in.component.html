@@ -1,7 +1,8 @@
 <div class="container-centered">
   <form class="form"
         [class.form-disabled]="load$ | async"
-        [tuiHint]="'Демо аккаунт <br>Логин: TestUser <br> Пароль: 12345678'">
+        [tuiHint]="'Демо аккаунт <br>Логин: TestUser <br> Пароль: 12345678'"
+        [tuiHintManual]="true">
     <div class="loading" *ngIf="load$ | async">
       <div class="loading-bar">
         <div></div>
