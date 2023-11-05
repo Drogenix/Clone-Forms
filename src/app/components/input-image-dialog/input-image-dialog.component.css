@@ -1,0 +1,109 @@
+.dialog-tabs{
+  display: flex;
+  align-items: center;
+  margin:24px 0;
+  border-bottom: 1px solid lightgray;
+}
+
+.dialog-tabs button{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: rgb(95,99,104);
+  font-weight: 600;
+  padding: 8px 16px;
+  transition: background-color 200ms ease-out;
+}
+
+.dialog-tabs button span{
+  position: relative;
+}
+
+.dialog-tabs button.tab-active span:before{
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -9px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #673ab7;
+}
+
+.dialog-tabs button:hover,
+.dialog-tabs button:active
+{
+  background-color: #f6f5f7;
+}
+
+
+.dialog-tabs button.tab-active{
+  color: #673ab7;
+}
+
+.dialog-tabs button.tab-active:hover,
+.dialog-tabs button.tab-active:active{
+  background-color: #eeeaff;
+}
+
+.input-image label{
+  position: relative;
+  display: block;
+  width: fit-content;
+  padding: 8px 24px;
+  background: #673ab7;
+  border: none;
+  color: white;
+  border-radius: 4px;
+  margin: auto;
+  cursor: pointer;
+}
+
+.input-image label span{
+  font-size: 14px;
+}
+
+.input-image input[type="file"]{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.input-image img{
+  display: block;
+  max-width: 128px;
+  height: auto;
+  margin: auto;
+}
+
+.input-image p{
+  margin: 12px 0;
+  text-align: center;
+  color: rgb(95,99,104);
+}
+
+.input-image app-spinner{
+  display: block;
+  position: static;
+  height: 18px;
+  width: min-content;
+  margin: auto;
+}
+
+.input-image-url::ng-deep app-text-input input {
+  border-bottom: 1px solid lightgray;
+}
+
+.input-image-url span{
+  display: inline-block;
+  line-height: 1.2;
+  font-size: 14px;
+  color: rgb(95,99,104);
+  margin: 8px 0 24px;
+}

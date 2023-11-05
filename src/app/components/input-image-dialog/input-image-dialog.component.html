@@ -1,0 +1,29 @@
+<p class="dialog-header">Вставка изображения</p>
+<div class="dialog-tabs">
+  <button [class.tab-active]="active === 1" (click)="setActiveTab(1)">
+    <span>Добавить</span>
+  </button>
+  <button [class.tab-active]="active === 2" (click)="setActiveTab(2)">
+    <span>Вставить URL</span>
+  </button>
+</div>
+<div class="dialog-tab-content">
+  <div class="input-image" *ngIf="active === 1">
+    <img src="assets/img/insert-image.png" alt="Выберите изображение" />
+    <p>Выберите изображение</p>
+    <label *ngIf="!(upload$ | async)" for="input">
+      <span>Обзор</span>
+      <input #fileInput id="input" (input)="submitInput()" type="file" accept="image/*">
+    </label>
+    <app-spinner *ngIf="upload$ | async"></app-spinner>
+  </div>
+  <ng-container *ngIf="active === 2">
+    <div class="input-image-url">
+      <app-text-input [formControl]="urlInput" placeholder="Вставьте ссылку на изображение"></app-text-input>
+      <span>Убедитесь, что URL правильный и вы не нарушаете авторских прав</span>
+      <div class="dialog-buttons">
+        <button class="dialog-submit" (click)="submitUrl()">Вставить изображение</button>
+      </div>
+    </div>
+  </ng-container>
+</div>
