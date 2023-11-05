@@ -78,10 +78,16 @@ export class UserService {
 
   signIn(user: AuthUser): Observable<User> {
     return this.http
-      .get<User[]>(
+      .get<AuthUser[]>(
         `${API_BASE_URL}/users?login=${user.login}&password=${user.password}`,
       )
       .pipe(
+        map((response) =>
+          response.filter(
+            (item) =>
+              item.login === user.login && item.password === user.password,
+          ),
+        ),
         switchMap((users: User[]) => {
           if (users.length === 0) return throwError(() => 'Неверный пароль');
 
