@@ -152,14 +152,13 @@ export class FormsService {
     return this.http
       .get<FormDetails[]>(`${API_BASE_URL}/form-details?link=${link}`)
       .pipe(
-        delay(300),
         switchMap((formDetails) => {
           if (formDetails.length === 0)
             return throwError(() => new Error('Page not found'));
 
-          return this.http.get<Form>(
-            `${API_BASE_URL}/forms/` + formDetails[0].formId,
-          );
+          return this.http
+            .get<Form[]>(`${API_BASE_URL}/forms?formId` + formDetails[0].formId)
+            .pipe(map((response) => response[0]));
         }),
       );
   }
