@@ -29,10 +29,17 @@ import { UserService } from '../../core/services/user.service';
 import { AuthUser } from '../../core/entity/auth-user';
 import { TuiDestroyService } from '@taiga-ui/cdk';
 import { Router, RouterLink } from '@angular/router';
+import { TuiHintModule } from '@taiga-ui/core';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, RouterLink, FormsModule],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    RouterLink,
+    FormsModule,
+    TuiHintModule,
+  ],
   providers: [TuiDestroyService],
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.css'],
