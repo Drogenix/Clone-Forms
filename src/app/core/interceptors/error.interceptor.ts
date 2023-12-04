@@ -22,7 +22,7 @@ export const errorInterceptor: HttpInterceptorFn = (request, next) => {
         return throwError(() => error);
       }
 
-      if (err.status === 500 || err.status === 0) {
+      if (err.status === 500 || err.status === 0 || err.status === 402) {
         error.status = 500;
         error.message = 'Сервисы не отвечают';
         error.details = 'Перезагрузите страницу или попробуйте позже';
