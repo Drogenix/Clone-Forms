@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   BehaviorSubject,
-  catchError,
-  delay,
   map,
   Observable,
   of,

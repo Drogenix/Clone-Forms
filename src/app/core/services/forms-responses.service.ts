@@ -4,7 +4,7 @@ import { Answer } from '../entity/answer';
 import { HttpClient } from '@angular/common/http';
 import { QuestionResponseGroup } from '../entity/question-response-grouped';
 import { combineLatest, map, Observable } from 'rxjs';
-import { API_BASE_URL, API_BASE_URL_2 } from '../../api-url';
+import { API_BASE_URL_2 } from '../../api-url';
 import { UuidGenerator } from './uuid-generator.service';
 import { FormUserResponse } from '../entity/form-user-response';
 import { QuestionResponseInfo } from '../entity/question-response-info';
