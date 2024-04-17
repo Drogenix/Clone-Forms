@@ -17,7 +17,7 @@ import { Form } from '../entity/form';
 import { UserService } from './user.service';
 import { FormDetails } from '../entity/form-details';
 import { Question } from '../entity/question';
-import { API_BASE_URL } from '../../api-url';
+import { API_BASE_URL, API_BASE_URL_2 } from '../../api-url';
 import { QuestionTypeName } from '../enum/question-type-name';
 import { UuidGenerator } from './uuid-generator.service';
 import { AppError } from '../entity/app-error';
@@ -51,7 +51,7 @@ export class FormsService {
     sortBy: 'deleted' | 'name' = 'name',
     nameLike?: string,
   ): Observable<FormDetails[]> {
-    let url = `${API_BASE_URL}/form-details?userId=${this.userService.user?.id}&sortBy=${sortBy}&order=${order}`;
+    let url = `${API_BASE_URL_2}/form-details?userId=${this.userService.user?.id}&sortBy=${sortBy}&order=${order}`;
     if (nameLike) url = url.replace('?', `?name=${nameLike}&`);
 
     return this.http.get<FormDetails[]>(url).pipe(
@@ -73,15 +73,15 @@ export class FormsService {
 
   getFormDetails(formId: string): Observable<FormDetails> {
     return this.http
-      .get<FormUserResponse[]>(
-        `${API_BASE_URL}/form-responses?formId=` + formId,
-      )
+      .get<
+        FormUserResponse[]
+      >(`${API_BASE_URL_2}/form-responses?formId=` + formId)
       .pipe(
         switchMap((formResponses) => {
           return this.http
-            .get<FormDetails[]>(
-              `${API_BASE_URL}/form-details?userId=${this.userService.user?.id}`,
-            )
+            .get<
+              FormDetails[]
+            >(`${API_BASE_URL_2}/form-details?userId=${this.userService.user?.id}`)
             .pipe(
               switchMap((response) => {
                 const filtered = response.filter(
@@ -109,9 +109,9 @@ export class FormsService {
     sortBy: 'lastUpdate' | 'name' = 'name',
   ): Observable<FormDetails[]> {
     return this.http
-      .get<FormDetails[]>(
-        `${API_BASE_URL}/form-details?userId=${this.userService.user?.id}&sortBy=${sortBy}&order=${order}`,
-      )
+      .get<
+        FormDetails[]
+      >(`${API_BASE_URL_2}/form-details?userId=${this.userService.user?.id}&sortBy=${sortBy}&order=${order}`)
       .pipe(
         map((response) => response.filter((item) => item.inTrash === false)),
       );
@@ -119,11 +119,15 @@ export class FormsService {
 
   findByName(name: string): Observable<FormDetails[]> {
     return this.http
-      .get<FormDetails[]>(
-        `${API_BASE_URL}/form-details?userId=${this.userService.user?.id}`,
-      )
+      .get<
+        FormDetails[]
+      >(`${API_BASE_URL_2}/form-details?userId=${this.userService.user?.id}`)
       .pipe(
-        map((response) => response.filter((item) => item.name.includes(name) && item.inTrash === false))
+        map((response) =>
+          response.filter(
+            (item) => item.name.includes(name) && item.inTrash === false,
+          ),
+        ),
       );
   }
 
@@ -149,7 +153,7 @@ export class FormsService {
 
   getByLink(link: string): Observable<Form> {
     return this.http
-      .get<FormDetails[]>(`${API_BASE_URL}/form-details?link=${link}`)
+      .get<FormDetails[]>(`${API_BASE_URL_2}/form-details?link=${link}`)
       .pipe(
         switchMap((formDetails) => {
           if (formDetails.length === 0)
@@ -172,7 +176,7 @@ export class FormsService {
     return this.http.put(`${API_BASE_URL}/forms/${form.uid}`, form).pipe(
       switchMap(() =>
         this.http.get<FormDetails[]>(
-          `${API_BASE_URL}/form-details?formId=${form.id}`,
+          `${API_BASE_URL_2}/form-details?formId=${form.id}`,
         ),
       ),
       switchMap((formDetailsResponse: FormDetails[]) => {
@@ -180,7 +184,7 @@ export class FormsService {
         formDetails.lastUpdate = new Date();
 
         return this.http.put(
-          `${API_BASE_URL}/form-details/` + formDetails.uid,
+          `${API_BASE_URL_2}/form-details/` + formDetails.uid,
           formDetails,
         );
       }),
@@ -193,7 +197,7 @@ export class FormsService {
     this._updatingDataSub.next(true);
 
     return this.http
-      .put(`${API_BASE_URL}/form-details/${formDetails.uid}`, formDetails)
+      .put(`${API_BASE_URL_2}/form-details/${formDetails.uid}`, formDetails)
       .pipe(tap(() => this._updatingDataSub.next(false)));
   }
 
@@ -240,7 +244,7 @@ export class FormsService {
         };
 
         return this.http
-          .post(`${API_BASE_URL}/form-details`, formDetails)
+          .post(`${API_BASE_URL_2}/form-details`, formDetails)
           .pipe(map(() => newForm));
       }),
     );

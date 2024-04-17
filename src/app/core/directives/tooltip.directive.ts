@@ -1,11 +1,4 @@
-import {
-  AfterViewInit,
-  Directive,
-  Host,
-  HostListener,
-  Inject,
-  Input,
-} from '@angular/core';
+import { Directive, Host, HostListener, Inject, Input } from '@angular/core';
 import { TuiHintDirective } from '@taiga-ui/core';
 
 @Directive({

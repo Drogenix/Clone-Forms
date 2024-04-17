@@ -4,7 +4,7 @@ import { Answer } from '../entity/answer';
 import { HttpClient } from '@angular/common/http';
 import { QuestionResponseGroup } from '../entity/question-response-grouped';
 import { combineLatest, map, Observable } from 'rxjs';
-import { API_BASE_URL } from '../../api-url';
+import { API_BASE_URL, API_BASE_URL_2 } from '../../api-url';
 import { UuidGenerator } from './uuid-generator.service';
 import { FormUserResponse } from '../entity/form-user-response';
 import { QuestionResponseInfo } from '../entity/question-response-info';
@@ -28,9 +28,9 @@ export class FormsResponsesService {
     questionId: number,
   ): Observable<QuestionResponseGroup[]> {
     return this.http
-      .get<FormUserResponse[]>(
-        `${API_BASE_URL}/form-responses?formId=` + formId,
-      )
+      .get<
+        FormUserResponse[]
+      >(`${API_BASE_URL_2}/form-responses?formId=` + formId)
       .pipe(map((responses) => this._groupResponses(responses, questionId)));
   }
 
@@ -117,7 +117,7 @@ export class FormsResponsesService {
   getFormResponsesSummary(formId: string): Observable<QuestionResponseInfo[]> {
     const form$ = this.formService.getById(formId);
     const formResponses$ = this.http.get<FormUserResponse[]>(
-      `${API_BASE_URL}/form-responses?formId=` + formId,
+      `${API_BASE_URL_2}/form-responses?formId=` + formId,
     );
 
     return combineLatest([form$, formResponses$]).pipe(
@@ -233,13 +233,13 @@ export class FormsResponsesService {
 
   getFormResponses(formId: string): Observable<FormUserResponse[]> {
     return this.http.get<FormUserResponse[]>(
-      `${API_BASE_URL}/form-responses?formId=` + formId,
+      `${API_BASE_URL_2}/form-responses?formId=` + formId,
     );
   }
 
   create(formResponse: FormUserResponse): Observable<Object> {
     formResponse.id = this.uuidGenerator.generate();
 
-    return this.http.post(`${API_BASE_URL}/form-responses`, formResponse);
+    return this.http.post(`${API_BASE_URL_2}/form-responses`, formResponse);
   }
 }
