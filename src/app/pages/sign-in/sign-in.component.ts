@@ -30,6 +30,9 @@ import { AuthUser } from '../../core/entity/auth-user';
 import { TuiDestroyService } from '@taiga-ui/cdk';
 import { Router, RouterLink } from '@angular/router';
 import { TuiHintModule } from '@taiga-ui/core';
+
+const USER_NOT_EXIST_TEXT = 'Такого пользователя не существует!';
+
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -98,7 +101,6 @@ export class SignInComponent implements AfterViewInit {
 
   private _errorSub = new BehaviorSubject<string>('');
   error$ = this._errorSub.asObservable();
-
   private _loadSub = new Subject<boolean>();
   load$ = this._loadSub.asObservable();
 
@@ -122,8 +124,7 @@ export class SignInComponent implements AfterViewInit {
         .userExists(this.loginForm.controls.login.value)
         .pipe(
           switchMap((exists) => {
-            if (!exists)
-              return throwError(() => 'Такого пользователя не существует');
+            if (!exists) return throwError(() => USER_NOT_EXIST_TEXT);
 
             return of(exists);
           }),

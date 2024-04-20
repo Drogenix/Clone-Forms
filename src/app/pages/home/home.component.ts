@@ -95,6 +95,7 @@ export class HomeComponent implements OnInit {
   forms$ = this.formsService.getUserForms();
   private _showLoadSub = new Subject<boolean>();
   loading$: Observable<boolean> = this._showLoadSub.asObservable();
+
   constructor(
     private formsService: FormsService,
     private router: Router,
@@ -129,6 +130,7 @@ export class HomeComponent implements OnInit {
       catchError(() => of([])),
     );
   }
+
   openMenu(event: MouseEvent, index: number) {
     event.stopPropagation();
 

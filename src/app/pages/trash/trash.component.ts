@@ -17,13 +17,10 @@ import {
   catchError,
   debounceTime,
   distinctUntilChanged,
-  map,
   of,
   startWith,
-  Subject,
   switchMap,
   takeUntil,
-  throwError,
 } from 'rxjs';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { PolymorpheusComponent } from '@tinkoff/ng-polymorpheus';

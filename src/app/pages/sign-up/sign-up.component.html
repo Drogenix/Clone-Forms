@@ -72,7 +72,7 @@
 <ng-template #inputErrors let-control>
   <ng-container *ngIf="control.touched">
     <p class="input-error" *ngIf="control.errors?.['required']">
-      Введите пароль
+      Это поле обязательно
     </p>
     <p class="input-error" *ngIf="control.errors?.['minlength']">
       Минимальная длина - {{ control.errors?.["minlength"].requiredLength }}

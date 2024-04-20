@@ -19,11 +19,13 @@ import { UserService } from '../../core/services/user.service';
 export class HeaderComponent {
   openProfile = false;
   userName = this.userService.user?.login;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private userService: UserService,
     private router: Router,
   ) {}
+
   toggleProfile() {
     this.openProfile = !this.openProfile;
     this.cdr.markForCheck();

@@ -70,6 +70,7 @@ export class FormViewComponent implements OnInit, OnChanges {
   error$ = this._errorSub.asObservable();
   formData$: Observable<FormViewData>;
   private formId = '';
+
   constructor(
     private fb: FormBuilder,
     private formService: FormsService,
@@ -85,8 +86,6 @@ export class FormViewComponent implements OnInit, OnChanges {
         details: null,
       });
       this._updateQuestions(this.viewForm);
-
-      return;
     }
 
     const form$ = this.activatedRoute.params.pipe(
@@ -153,6 +152,7 @@ export class FormViewComponent implements OnInit, OnChanges {
       this.responses.push(questionResponse);
     }
   }
+
   private _getResponseDefault(question: Question): FormQuestionResponse {
     return {
       id: this.responses.length,
@@ -161,6 +161,7 @@ export class FormViewComponent implements OnInit, OnChanges {
       answers: [],
     };
   }
+
   saveResponse() {
     if (this.responses.valid) {
       const userResponse: FormUserResponse = {
@@ -177,6 +178,7 @@ export class FormViewComponent implements OnInit, OnChanges {
       this.responses.markAllAsTouched();
     }
   }
+
   clearUserResponse(form: Form) {
     for (let i = 0; i < this.responses.controls.length; i++) {
       const question = form.questions[i];
