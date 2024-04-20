@@ -71,7 +71,7 @@ export class UserService {
   userExists(login: string): Observable<boolean> {
     return this.http.get<boolean>(`${API_BASE_URL}/users?login=${login}`).pipe(
       catchError((error: AppError) => {
-        return of(error.status === 404);
+        return of(!(error.status === 404));
       }),
     );
   }
