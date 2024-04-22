@@ -1,5 +1,5 @@
 import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
-import { catchError, throwError } from 'rxjs';
+import { catchError, map, of, throwError } from 'rxjs';
 import { AppError } from '../entity/app-error';
 import { inject } from '@angular/core';
 import { ErrorService } from '../services/error.service';

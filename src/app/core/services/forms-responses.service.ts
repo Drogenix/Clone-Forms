@@ -3,7 +3,14 @@ import { FormResponseAnswer } from '../entity/form-response-answer';
 import { Answer } from '../entity/answer';
 import { HttpClient } from '@angular/common/http';
 import { QuestionResponseGroup } from '../entity/question-response-grouped';
-import { combineLatest, map, Observable } from 'rxjs';
+import {
+  catchError,
+  combineLatest,
+  map,
+  Observable,
+  of,
+  throwError,
+} from 'rxjs';
 import { API_BASE_URL_2 } from '../../api-url';
 import { UuidGenerator } from './uuid-generator.service';
 import { FormUserResponse } from '../entity/form-user-response';
@@ -12,6 +19,7 @@ import { Question } from '../entity/question';
 import { QuestionResponseAnswerInfo } from '../entity/question-response-answer-info';
 import { FormsService } from './forms.service';
 import { FormQuestionResponse } from '../entity/question-response';
+import { AppError } from '../entity/app-error';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +39,14 @@ export class FormsResponsesService {
       .get<
         FormUserResponse[]
       >(`${API_BASE_URL_2}/form-responses?formId=` + formId)
-      .pipe(map((responses) => this._groupResponses(responses, questionId)));
+      .pipe(
+        catchError((error: AppError) => {
+          if (error.status == 404) return of([]);
+
+          return throwError(() => error);
+        }),
+        map((responses) => this._groupResponses(responses, questionId)),
+      );
   }
 
   private _groupResponses(
@@ -116,9 +131,17 @@ export class FormsResponsesService {
 
   getFormResponsesSummary(formId: string): Observable<QuestionResponseInfo[]> {
     const form$ = this.formService.getById(formId);
-    const formResponses$ = this.http.get<FormUserResponse[]>(
-      `${API_BASE_URL_2}/form-responses?formId=` + formId,
-    );
+    const formResponses$ = this.http
+      .get<
+        FormUserResponse[]
+      >(`${API_BASE_URL_2}/form-responses?formId=` + formId)
+      .pipe(
+        catchError((error: AppError) => {
+          if (error.status == 404) return of([]);
+
+          return throwError(() => error);
+        }),
+      );
 
     return combineLatest([form$, formResponses$]).pipe(
       map(([form, formResponses]) => {
@@ -232,9 +255,17 @@ export class FormsResponsesService {
   }
 
   getFormResponses(formId: string): Observable<FormUserResponse[]> {
-    return this.http.get<FormUserResponse[]>(
-      `${API_BASE_URL_2}/form-responses?formId=` + formId,
-    );
+    return this.http
+      .get<
+        FormUserResponse[]
+      >(`${API_BASE_URL_2}/form-responses?formId=` + formId)
+      .pipe(
+        catchError((error: AppError) => {
+          if (error.status == 404) return of([]);
+
+          return throwError(() => error);
+        }),
+      );
   }
 
   create(formResponse: FormUserResponse): Observable<Object> {

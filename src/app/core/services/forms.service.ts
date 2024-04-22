@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {
   BehaviorSubject,
+  catchError,
   map,
   Observable,
   of,
@@ -75,6 +76,11 @@ export class FormsService {
         FormUserResponse[]
       >(`${API_BASE_URL_2}/form-responses?formId=` + formId)
       .pipe(
+        catchError((error: AppError) => {
+          if (error.status == 404) return of([]);
+
+          return throwError(() => error);
+        }),
         switchMap((formResponses) => {
           return this.http
             .get<

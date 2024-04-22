@@ -69,11 +69,11 @@ export class UserService {
   }
 
   userExists(login: string): Observable<boolean> {
-    return this.http.get<boolean>(`${API_BASE_URL}/users?login=${login}`).pipe(
-      catchError((error: AppError) => {
-        return of(!(error.status === 404));
-      }),
-    );
+    return this.http
+      .get<User[]>(`${API_BASE_URL}/users`)
+      .pipe(
+        map((users) => users.filter((usr) => usr.login === login).length == 1),
+      );
   }
 
   signIn(user: AuthUser): Observable<User> {
